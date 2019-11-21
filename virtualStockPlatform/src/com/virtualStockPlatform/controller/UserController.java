@@ -1,0 +1,69 @@
+package com.virtualStockPlatform.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.virtualStockPlatform.entity.User;
+import com.virtualStockPlatform.service.UserService;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+	// need to inject user service
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping("/list")
+	public String listCustomers(Model theModel) {
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+
+		// add the users to the model
+		theModel.addAttribute("users", theUsers);
+
+		return "list-users";
+	}
+	
+	@GetMapping("/showFormForAdd")
+	public String showFormForAdd(Model theMode) {
+		// create model attribute to bind form data
+		User theUser = new User();
+		theMode.addAttribute("user", theUser);
+		return "user-form";
+	}
+	
+	@PostMapping("/saveUser")
+	public String saveCustomer(@ModelAttribute("user") User theUser) {
+		
+		// save the customer using our service
+		userService.saveUser(theUser);
+		
+		return "redirect:/user/list";
+	}
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("userId") int theId, Model theModel) {
+		// get the user from the db
+		User theUser = userService.getUser(theId);
+		// set user as a model attribute to pre-populate the form
+		theModel.addAttribute("user", theUser);
+		// send over to form
+		return "user-form";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteUser(@RequestParam("userId") int theId) {
+		// delete the user
+		userService.deleteUser(theId);
+		return "redirect:/user/list";
+	}
+}
