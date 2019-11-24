@@ -46,5 +46,28 @@ public class UserServiceImpl implements UserService {
 	public List<Property> getProperties(int theId) {
 		return userDAO.getProperties(theId);
 	}
+	
+	@Override
+	@Transactional
+	public double getSumOfStocks(List<Property> properties) {
+		return userDAO.getSumOfStocks(properties);
+	}
 
+	@Override
+	@Transactional
+	public double getSumOfStock(Property property) {
+		return userDAO.getSumOfStock(property);
+	}
+
+	@Override
+	@Transactional
+	public void buyProperty(User theUser, Property property) {
+		userDAO.buyProperty(theUser, property);
+	}
+
+	@Override
+	@Transactional
+	public void sellProperty(User theUser, Property property) {
+		userDAO.sellProperty(theUser, property);
+	}
 }

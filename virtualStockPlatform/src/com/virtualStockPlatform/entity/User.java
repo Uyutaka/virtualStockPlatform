@@ -33,9 +33,9 @@ public class User {
 	@Column(name="balance")
 	private Double balance;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private List<Property> properties;
+//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//	@JoinColumn(name="user_id")
+//	private List<Property> properties;
 	
 	public User() {
 		
@@ -81,17 +81,17 @@ public class User {
 		this.email = email;
 	}
 
-	public List<Property> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(List<Property> properties) {
-		this.properties = properties;
-	}
+//	public List<Property> getProperties() {
+//		return properties;
+//	}
+//
+//	public void setProperties(List<Property> properties) {
+//		this.properties = properties;
+//	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", balance=" + balance + ", properties=" + properties + "]";
+				+ ", balance=" + balance + "]";
 	}	
 }
