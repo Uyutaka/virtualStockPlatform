@@ -42,13 +42,13 @@ INSERT INTO `user` VALUES
   (5,'Maxwell','Dixon','max@lcolorado.edu',10000.00);
 
 INSERT INTO `property` VALUES 
-  (1, 10, 'GOOGLE', 1),
-  (2, 50, 'GOOGLE', 2),
-  (3, 60, 'AMAZON', 3),
-  (4, 50, 'AMAZON', 4),
-  (5, 30, 'FACEBOOK', 1),
-  (6, 40, 'NVIDIA', 3),
-  (7, 15, 'LINKEDIN', 4),
-  (8, 25, 'FACEBOOK', 5);
+  (1, 10, 'GOOG', 1),
+  (2, 50, 'GOOG', 2),
+  (3, 60, 'AMZN', 3),
+  (4, 50, 'AMZN', 4),
+  (5, 30, 'NKE', 1),
+  (6, 40, 'AAPL', 3),
+  (7, 15, 'NVDA', 4),
+  (8, 25, 'NKE', 5);
 
 SET FOREIGN_KEY_CHECKS = 1;

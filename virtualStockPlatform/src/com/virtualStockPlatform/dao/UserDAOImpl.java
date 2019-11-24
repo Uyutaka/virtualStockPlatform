@@ -1,14 +1,22 @@
 package com.virtualStockPlatform.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.entity.Property;
+import com.virtualStockPlatform.entity.Stock;
 import com.virtualStockPlatform.entity.User;
 
 @Repository
@@ -84,5 +92,79 @@ public class UserDAOImpl implements UserDAO{
 		// return the results
 		
 		return properties;
+	}
+
+
+	@Override
+	public double getSumOfStocks(List<Property> properties) {
+		double res = 0.0;
+		for (Property property : properties) {
+			String stockName = property.getStockName();
+			System.out.println("Stock Name is: " + stockName);
+			Stock stock = getStockByName(stockName);
+			System.out.println("Stock price is: " + stock.getTimeSeries().entrySet().iterator().next().getValue().getClose());
+			System.out.println("Stock number is: " + property.getNumStocks());
+			res += stock.getTimeSeries().entrySet().iterator().next().getValue().getClose() * property.getNumStocks();
+		}
+		System.out.print("Sum of Stocks: " + res);
+		return res;
+	}
+	
+	private Stock getStockByName(String name) {
+		String text = "";
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(
+				String.format("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=1min&apikey=ACPN4KEH4052XAQ6", name),
+				String.class);
+
+		if (HttpStatus.OK == response.getStatusCode()) {
+			text = response.getBody().toString();
+		} else {
+			System.out.println("Error");
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Stock stock = new Stock();
+		try {
+			// JSON string to Java object
+			stock = mapper.readValue(text, Stock.class);
+		} catch (IOException e) {
+			System.out.println("Test failed.");
+			e.printStackTrace();
+		}
+		return stock;
+	}
+
+
+	@Override
+	public double getSumOfStock(Property property) {
+		double res = 0.0;
+		String stockName = property.getStockName();
+		System.out.println("Stock Name is: " + stockName);
+		Stock stock = getStockByName(stockName);
+		System.out.println("Stock price is: " + stock.getTimeSeries().entrySet().iterator().next().getValue().getClose());
+		System.out.println("Stock number is: " + property.getNumStocks());
+		res += stock.getTimeSeries().entrySet().iterator().next().getValue().getClose() * property.getNumStocks();
+		System.out.print("Sum of Stocks: " + res);
+		return res;
+	}
+
+
+	@Override
+	public void buyProperty(User theUser, Property property) {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		// save/update the user
+		currentSession.saveOrUpdate(theUser);
+		currentSession.saveOrUpdate(property);
+	}
+
+
+	@Override
+	public void sellProperty(User theUser, Property property) {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		// save/update the user
+		currentSession.saveOrUpdate(theUser);
+		currentSession.saveOrUpdate(property);	
 	}
 }

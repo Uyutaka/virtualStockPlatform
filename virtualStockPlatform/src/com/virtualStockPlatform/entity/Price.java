@@ -1,48 +1,69 @@
 package com.virtualStockPlatform.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.JsonNode;
 
 public class Price {
-	// TODO https://www.baeldung.com/jackson-mapping-dynamic-object
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonPropertyOrder({
-	"Meta Data",
-	"Time Series (1min)"
-	})
-
-	@JsonProperty("Meta Data")
-	private Map<String, Object> metaData;
 	
-	@JsonProperty("Time Series (1min)")
-	private Map<String, Object> timeSeries;
-
-	public Map<String, Object> getMetaData() {
-		return metaData;
-	}
-
-	public void setMetaData(Map<String, Object> metaData) {
-		this.metaData = metaData;
-	}
-
-	public Map<String, Object> getTimeSeries() {
-		return timeSeries;
-	}
-
-	public void setTimeSeries(Map<String, Object> timeSeries) {
-		this.timeSeries = timeSeries;
-	}
-
-
+	@JsonProperty("1. open")
+	private double open;
 	
+	@JsonProperty("2. high")
+	private double high;
+	
+	@JsonProperty("3. low")
+	private double low;
+	
+	@JsonProperty("4. close")
+	private double close;
+	
+	@JsonProperty("5. volume")
+	private int volume;
 
+	public double getOpen() {
+		return open;
+	}
+
+	public void setOpen(double open) {
+		this.open = open;
+	}
+
+	public double getHigh() {
+		return high;
+	}
+
+	public void setHigh(double high) {
+		this.high = high;
+	}
+
+	public double getLow() {
+		return low;
+	}
+
+	public void setLow(double low) {
+		this.low = low;
+	}
+
+	public double getClose() {
+		return close;
+	}
+
+	public void setClose(double close) {
+		this.close = close;
+	}
+
+	public int getVolume() {
+		return volume;
+	}
+
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
+	@Override
+	public String toString() {
+		return "Price [open=" + open + ", high=" + high + ", low=" + low + ", close=" + close + ", volume=" + volume
+				+ "]";
+	}
+	
+	
 }
