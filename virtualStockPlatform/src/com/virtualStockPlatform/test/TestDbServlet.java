@@ -1,4 +1,4 @@
-package com.virtualStockPlatform.testdb;
+package com.virtualStockPlatform.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;

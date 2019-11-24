@@ -2,6 +2,7 @@ package com.virtualStockPlatform.service;
 
 import java.util.List;
 
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 
 public interface UserService {
@@ -12,5 +13,7 @@ public interface UserService {
 	public User getUser(int theId);
 
 	public void deleteUser(int theId);
+	
+	public List<Property> getProperties(int theId);
 
 }

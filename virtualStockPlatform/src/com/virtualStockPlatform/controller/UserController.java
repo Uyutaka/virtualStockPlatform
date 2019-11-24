@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.virtualStockPlatform.entity.Car;
-import com.virtualStockPlatform.entity.Stock;
+import com.virtualStockPlatform.entity.Price;
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 import com.virtualStockPlatform.service.UserService;
+import com.virtualStockPlatform.service.UserServiceImpl;
 
 @Controller
 @RequestMapping("/user")
@@ -44,10 +45,10 @@ public class UserController {
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(Model theMode) {
+	public String showFormForAdd(Model theModel) {
 		// create model attribute to bind form data
 		User theUser = new User();
-		theMode.addAttribute("user", theUser);
+		theModel.addAttribute("user", theUser);
 		return "user-form";
 	}
 
@@ -115,7 +116,7 @@ public class UserController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			// JSON string to Java object
-			Stock stock = mapper.readValue(jsonInString, Stock.class);
+			Price stock = mapper.readValue(jsonInString, Price.class);
 			Set st = stock.getTimeSeries().keySet(); // extract keys EX: 2019-11-22 12:03:00, 2019-11-22 12:02:00
 			String time = (String) st.iterator().next();
 			System.out.println("Time: " + time);
@@ -132,5 +133,12 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// Test get list
+	@GetMapping("/test1")
+	public String listPropertiess(Model theModel) {
+		List<Property> res = userService.getProperties(1);
+		return "test-json";
 	}
 }
