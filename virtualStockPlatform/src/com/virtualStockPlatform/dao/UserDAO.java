@@ -2,6 +2,7 @@ package com.virtualStockPlatform.dao;
 
 import java.util.List;
 
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 
 public interface UserDAO {
@@ -12,5 +13,6 @@ public interface UserDAO {
 	public User getUser(int theId);
 
 	public void deleteUser(int theId);
-
+	
+	public List<Property> getProperties(int theId);
 }

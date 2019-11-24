@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class Stock {
+public class Price {
 	// TODO https://www.baeldung.com/jackson-mapping-dynamic-object
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)

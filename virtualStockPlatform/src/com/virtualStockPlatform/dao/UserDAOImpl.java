@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 
 @Repository
@@ -20,7 +21,6 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public List<User> getUsers() {
-		// TODO 280
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
@@ -66,5 +66,23 @@ public class UserDAOImpl implements UserDAO{
 				currentSession.createQuery("delete from User where id=:userId");
 		theQuery.setParameter("userId", theId);
 		theQuery.executeUpdate();
+	}
+
+
+	@Override
+	public List<Property> getProperties(int theId) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Property> theQuery = currentSession.createQuery("from Property where userId=:Id", Property.class);
+		theQuery.setParameter("Id", theId);
+		// execute query and get result list
+		List<Property> properties = theQuery.getResultList();
+		System.out.println(properties);
+		
+		// return the results
+		
+		return properties;
 	}
 }
