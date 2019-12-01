@@ -12,7 +12,7 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			<h2>User profile plato</h2>
+			<h2>User profile platform</h2>
 		</div>
 
 		<div id="container">
@@ -25,11 +25,14 @@
 						<th>Email</th>
 						<th>Balance</th>
 					</tr>
+					<c:url var="updateLink" value="/user/showFormForUpdate">
+							<c:param name="userId" value="${tempUser.id}" />
+						</c:url>
 						<tr>
-							<td>${tempUser.firstName}</td>
-							<td>${tempUser.lastName}</td>
-							<td>${tempUser.email}</td>
-							<td>${tempUser.balance}</td>
+							<td>${User.firstName}</td>
+							<td>${User.lastName}</td>
+							<td>${User.email}</td>
+							<td>${User.balance}</td>
 						</tr>
 						<!-- display the update link -->
 						<input type="button" value="Edit User"

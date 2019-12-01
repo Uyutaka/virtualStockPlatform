@@ -1,15 +1,11 @@
 package com.virtualStockPlatform.entity;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.JsonNode;
 
 public class Stock {
 	// TODO https://www.baeldung.com/jackson-mapping-dynamic-object
@@ -21,28 +17,31 @@ public class Stock {
 	})
 
 	@JsonProperty("Meta Data")
-	private Map<String, Object> metaData;
+	private StockInfo metaData;
 	
 	@JsonProperty("Time Series (1min)")
-	private Map<String, Object> timeSeries;
+	private LinkedHashMap<String, Price> timeSeries;
+	
+	public Stock() {}
 
-	public Map<String, Object> getMetaData() {
+	public StockInfo getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(Map<String, Object> metaData) {
+	public void setMetaData(StockInfo metaData) {
 		this.metaData = metaData;
 	}
 
-	public Map<String, Object> getTimeSeries() {
+	public LinkedHashMap<String, Price> getTimeSeries() {
 		return timeSeries;
 	}
 
-	public void setTimeSeries(Map<String, Object> timeSeries) {
+	public void setTimeSeries(LinkedHashMap<String, Price> timeSeries) {
 		this.timeSeries = timeSeries;
 	}
 
-
-	
-
+	@Override
+	public String toString() {
+		return "Stock [metaData=" + metaData + ", timeSeries=" + timeSeries + "]";
+	}
 }

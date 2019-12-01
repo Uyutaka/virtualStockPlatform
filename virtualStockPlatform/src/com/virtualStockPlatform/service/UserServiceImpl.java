@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.virtualStockPlatform.dao.UserDAO;
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 
 @Service
@@ -40,4 +41,33 @@ public class UserServiceImpl implements UserService {
 		userDAO.deleteUser(theId);
 	}
 
+	@Override
+	@Transactional
+	public List<Property> getProperties(int theId) {
+		return userDAO.getProperties(theId);
+	}
+	
+	@Override
+	@Transactional
+	public double getSumOfStocks(List<Property> properties) {
+		return userDAO.getSumOfStocks(properties);
+	}
+
+	@Override
+	@Transactional
+	public double getSumOfStock(Property property) {
+		return userDAO.getSumOfStock(property);
+	}
+
+	@Override
+	@Transactional
+	public void buyProperty(User theUser, Property property) {
+		userDAO.buyProperty(theUser, property);
+	}
+
+	@Override
+	@Transactional
+	public void sellProperty(User theUser, Property property) {
+		userDAO.sellProperty(theUser, property);
+	}
 }

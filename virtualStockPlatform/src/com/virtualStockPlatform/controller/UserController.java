@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.virtualStockPlatform.entity.Car;
 import com.virtualStockPlatform.entity.Stock;
+import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 import com.virtualStockPlatform.service.UserService;
 
@@ -44,10 +44,10 @@ public class UserController {
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(Model theMode) {
+	public String showFormForAdd(Model theModel) {
 		// create model attribute to bind form data
 		User theUser = new User();
-		theMode.addAttribute("user", theUser);
+		theModel.addAttribute("user", theUser);
 		return "user-form";
 	}
 
@@ -116,21 +116,29 @@ public class UserController {
 		try {
 			// JSON string to Java object
 			Stock stock = mapper.readValue(jsonInString, Stock.class);
-			Set st = stock.getTimeSeries().keySet(); // extract keys EX: 2019-11-22 12:03:00, 2019-11-22 12:02:00
-			String time = (String) st.iterator().next();
-			System.out.println("Time: " + time);
-			String element = stock.getTimeSeries().get(time).toString(); // EX: {1. open=149.2800, 2. high=149.3000, 3.
-																			// low=149.2700, 4. close=149.3000, 5.
-																			// volume=20681}
-
-			Pattern p = Pattern.compile("\\d+(?:\\.\\d+)");
-			Matcher m = p.matcher(element);
-			while (m.find()) {
-				System.out.println(m.group());
-			}
+			String stockName = stock.getMetaData().getName();
+			System.out.println("stockName is : " + stockName);
+			System.out.println(stock.getTimeSeries().entrySet().iterator().next());
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	// Test get list
+	@GetMapping("/test1")
+	public String listPropertiess(Model theModel) {
+		List<Property> res = userService.getProperties(1);
+		return "test-json";
+	}
+	
+	// Test get list
+	@GetMapping("/test2")
+	public String listSumOfStocks(Model theModel) {
+		List<Property> res = userService.getProperties(1);
+		userService.getSumOfStocks(res);
+		return "test-json";
+	}
+	
+	
 }
