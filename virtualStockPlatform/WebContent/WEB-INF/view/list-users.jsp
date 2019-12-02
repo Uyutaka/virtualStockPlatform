@@ -21,7 +21,7 @@
 
 				<!-- put new button: Add Customer -->
 				<input type="button" value="Add User"
-					onclick="window.location.href='showFormForAdd'; return false;"
+					onclick="window.location.href='showFormForUpdate'; return false;"
 					class="add-button" />
 
 				<!-- add our html table here -->

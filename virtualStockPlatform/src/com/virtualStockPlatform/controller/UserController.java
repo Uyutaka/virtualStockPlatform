@@ -85,6 +85,19 @@ public class UserController {
 
 	}
 
+	@GetMapping("/profile")
+	public String showProfile(Model theModel) {
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+		// TODO temporally use the user of index 0
+		//      Please change it to the current user.
+		User tmpUser = theUsers.get(0);
+
+		// add the user to the model
+		theModel.addAttribute("user", tmpUser);
+		return "user-profile";
+	}
+		
 	// Get and return Json(String)
 	// TODO 
 	// 1) Add parameters (company name (or symbol) and success, error handlers)
