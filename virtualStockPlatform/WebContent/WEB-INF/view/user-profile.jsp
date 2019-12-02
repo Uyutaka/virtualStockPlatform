@@ -26,7 +26,7 @@
 						<th>Balance</th>
 					</tr>
 					<c:url var="updateLink" value="/user/showFormForUpdate">
-							<c:param name="userId" value="${tempUser.id}" />
+							<c:param name="userId" value="${User.id}" />
 						</c:url>
 						<tr>
 							<td>${User.firstName}</td>
