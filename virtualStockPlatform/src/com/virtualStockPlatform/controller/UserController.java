@@ -85,6 +85,20 @@ public class UserController {
 
 	}
 
+	@GetMapping("/profile")
+	public String showProfile(Model theModel) {
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+		User tmpUser = theUsers.get(0);
+
+		// add the users to the model
+		theModel.addAttribute("user", tmpUser);
+		return "user-profile";
+	}
+		
+		
+
+	
 	// Get and return Json(String)
 	// TODO 
 	// 1) Add parameters (company name (or symbol) and success, error handlers)

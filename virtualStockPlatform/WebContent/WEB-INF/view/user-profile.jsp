@@ -26,13 +26,13 @@
 						<th>Balance</th>
 					</tr>
 					<c:url var="updateLink" value="/user/showFormForUpdate">
-							<c:param name="userId" value="${User.id}" />
+							<c:param name="userId" value="${user.id}" />
 						</c:url>
 						<tr>
-							<td>${User.firstName}</td>
-							<td>${User.lastName}</td>
-							<td>${User.email}</td>
-							<td>${User.balance}</td>
+							<td>${user.firstName}</td>
+							<td>${user.lastName}</td>
+							<td>${user.email}</td>
+							<td>${user.balance}</td>
 						</tr>
 						<!-- display the update link -->
 						<input type="button" value="Edit User"
