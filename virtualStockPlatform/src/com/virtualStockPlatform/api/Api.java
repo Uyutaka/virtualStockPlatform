@@ -1,9 +1,6 @@
 package com.virtualStockPlatform.api;
 
-import java.io.IOException;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.entity.Stock;
 
-// Functions related to api
 public class Api {
 	private String[] SYMBOLS = {"GOOG", "AMZN", "NKE", "AAPL", "NVDA"};
 	

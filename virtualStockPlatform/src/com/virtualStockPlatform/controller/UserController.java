@@ -1,18 +1,10 @@
 package com.virtualStockPlatform.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.virtualStockPlatform.entity.Stock;
 import com.virtualStockPlatform.api.Api;
 import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
@@ -57,8 +46,6 @@ public class UserController {
 				}
 			}
 			theSumOfStocks.add(price);
-//			System.out.println(prop);
-//			theSumOfStocks.add(userService.getSumOfStocks(res));
 		}
 
 		// add the users to the model
