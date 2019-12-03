@@ -15,6 +15,8 @@
 <a href="user/test1">test getProperties</a>
 <br>
 <a href="user/test2">test getSumOfProperties</a>
+<br>
+<a href="login">Login</a>
 
 </body>
 </html>
