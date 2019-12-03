@@ -34,18 +34,23 @@ public class UserController {
 		// Get all comapany's stock prices
 		Api api = new Api();
 		HashMap<String, Double> priceMap = api.getAllPrices();
-		// Get all users' property
-		List<Double> theSumOfStocks = new ArrayList<Double>();
 
-		for (int i = 0; i < theUsers.size(); i++) {
-			double price = 0;
-			List<Property> prop = userService.getProperties(theUsers.get(i).getId());
-			for (int j = 0; j < prop.size(); j++) {
-				if (priceMap.containsKey(prop.get(j).getStockName())) {
-					price += priceMap.get(prop.get(j).getStockName()) * prop.get(j).getNumStocks();
+		// store users' sum of stocks
+		List<Double> theSumOfStocks = new ArrayList<Double>();
+		
+		if (!api.isError(priceMap)) {
+			for (int i = 0; i < theUsers.size(); i++) {
+				double price = 0;
+				List<Property> prop = userService.getProperties(theUsers.get(i).getId());
+				for (int j = 0; j < prop.size(); j++) {
+					if (priceMap.containsKey(prop.get(j).getStockName())) {
+						price += priceMap.get(prop.get(j).getStockName()) * prop.get(j).getNumStocks();
+					}
 				}
+				theSumOfStocks.add(price);
 			}
-			theSumOfStocks.add(price);
+		}else {
+			System.out.println("Error happens");
 		}
 
 		// add the users to the model

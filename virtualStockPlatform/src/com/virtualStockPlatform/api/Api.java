@@ -15,6 +15,7 @@ public class Api {
 	private String[] SYMBOLS = {"GOOG", "AMZN", "NKE", "AAPL", "NVDA"};
 	
 	// Return symbol's stock price
+	// Return 0 when an error happens
 	public double getPrice(String companySymbol) {
 		String text = getJson(companySymbol);
 		return extractPrice(text);
@@ -22,13 +23,25 @@ public class Api {
 	
 	// Return HashMap (key: symbol, value: price)
 	public HashMap<String, Double> getAllPrices() {
-		HashMap<String, Double> priceDic = new HashMap<String, Double>();
+		HashMap<String, Double> priceMap = new HashMap<String, Double>();
         for (int i = 0; i < SYMBOLS.length; i++) {
     		String text = getJson(SYMBOLS[i]);
     		Double price = extractPrice(text);
-    		priceDic.put(SYMBOLS[i], price);
+    		priceMap.put(SYMBOLS[i], price);
         }
-		return priceDic;
+		return priceMap;
+	}
+	
+	// Check if the result of api has error (does it include 0)
+	public boolean isError(HashMap<String, Double> priceMap) {
+		boolean result = false;
+		for (String key: priceMap.keySet()) {
+		    if(priceMap.get(key) == 0) {
+		    	result = true;
+		    	break;
+		    }
+		}
+		return result;
 	}
 
 	private String getJson(String companySymbol) {
