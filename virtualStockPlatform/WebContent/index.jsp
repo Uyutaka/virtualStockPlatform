@@ -7,10 +7,13 @@
 <body>
 
 <a href="user/list">user list</a>
-<a href="user/test">Get Json</a>
+<br>
 <a href="user/profile">user profile</a>
+<br>
 <a href="user/test">Get JSON</a>
+<br>
 <a href="user/test1">test getProperties</a>
+<br>
 <a href="user/test2">test getSumOfProperties</a>
 
 </body>

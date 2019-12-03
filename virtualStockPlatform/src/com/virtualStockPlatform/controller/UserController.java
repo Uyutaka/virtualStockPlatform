@@ -1,8 +1,12 @@
 package com.virtualStockPlatform.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.entity.Stock;
+import com.virtualStockPlatform.api.Api;
 import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.User;
 import com.virtualStockPlatform.service.UserService;
@@ -37,8 +42,28 @@ public class UserController {
 		// get users from the service
 		List<User> theUsers = userService.getUsers();
 
+		// Get all comapany's stock prices
+		Api api = new Api();
+		HashMap<String, Double> priceMap = api.getAllPrices();
+		// Get all users' property
+		List<Double> theSumOfStocks = new ArrayList<Double>();
+
+		for (int i = 0; i < theUsers.size(); i++) {
+			double price = 0;
+			List<Property> prop = userService.getProperties(theUsers.get(i).getId());
+			for (int j = 0; j < prop.size(); j++) {
+				if (priceMap.containsKey(prop.get(j).getStockName())) {
+					price += priceMap.get(prop.get(j).getStockName()) * prop.get(j).getNumStocks();
+				}
+			}
+			theSumOfStocks.add(price);
+//			System.out.println(prop);
+//			theSumOfStocks.add(userService.getSumOfStocks(res));
+		}
+
 		// add the users to the model
 		theModel.addAttribute("users", theUsers);
+		theModel.addAttribute("sumOfStocks", theSumOfStocks);
 
 		return "list-users";
 	}
@@ -79,10 +104,11 @@ public class UserController {
 
 	@GetMapping("/test")
 	public String test() {
-		String json = getJson();
-		showData(json);
+		Api api = new Api();
+		String companySymbol = "MSFT";
+		double price = api.getPrice(companySymbol);
+		System.out.print("Open Price " + price);
 		return "test-json";
-
 	}
 
 	@GetMapping("/profile")
@@ -90,61 +116,21 @@ public class UserController {
 		// get users from the service
 		List<User> theUsers = userService.getUsers();
 		// TODO temporally use the user of index 0
-		//      Please change it to the current user.
+		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
 
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
 		return "user-profile";
 	}
-		
-	// Get and return Json(String)
-	// TODO 
-	// 1) Add parameters (company name (or symbol) and success, error handlers)
-	// 2) Remove hard-coded url
-	private String getJson() {
-		// Reference
-		// https://www.leveluplunch.com/java/tutorials/015-consuming-rest-webservice-with-spring-resttemplate/
-		// Reference // https://www.baeldung.com/spring-rest-template-list
-		String text = "";
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity(
-				"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=ACPN4KEH4052XAQ6",
-				String.class);
 
-		if (HttpStatus.OK == response.getStatusCode()) {
-			text = response.getBody().toString();
-		} else {
-			System.out.println("Error");
-		}
-		return text;
-	}
-
-	// Show the time and prices
-	// TODO
-	// 1) Add parameters (Success, error handlers)
-	// 2) Return time and price.
-	private void showData(String jsonInString) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			// JSON string to Java object
-			Stock stock = mapper.readValue(jsonInString, Stock.class);
-			String stockName = stock.getMetaData().getName();
-			System.out.println("stockName is : " + stockName);
-			System.out.println(stock.getTimeSeries().entrySet().iterator().next());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	// Test get list
 	@GetMapping("/test1")
 	public String listPropertiess(Model theModel) {
 		List<Property> res = userService.getProperties(1);
 		return "test-json";
 	}
-	
+
 	// Test get list
 	@GetMapping("/test2")
 	public String listSumOfStocks(Model theModel) {
@@ -152,6 +138,5 @@ public class UserController {
 		userService.getSumOfStocks(res);
 		return "test-json";
 	}
-	
-	
+
 }

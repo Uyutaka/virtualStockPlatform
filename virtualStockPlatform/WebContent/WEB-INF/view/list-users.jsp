@@ -31,11 +31,13 @@
 						<th>Last Name</th>
 						<th>Email</th>
 						<th>Balance</th>
+						<th>Sum Of Stocks</th>
+
 						<th>Action</th>
 					</tr>
 
 					<!-- loop over and print our users -->
-					<c:forEach var="tempUser" items="${users}">
+					<c:forEach var="tempUser" items="${users}" varStatus="status">
 						<!-- construct an "update" link with user id -->
 						<c:url var="updateLink" value="/user/showFormForUpdate">
 							<c:param name="userId" value="${tempUser.id}" />
@@ -50,6 +52,7 @@
 							<td>${tempUser.lastName}</td>
 							<td>${tempUser.email}</td>
 							<td>${tempUser.balance}</td>
+							<td>${sumOfStocks[status.index]}</td>
 							<!-- display the update link -->
 							<td><a href="${updateLink}">Update</a> | <a
 								href="${deleteLink}"
