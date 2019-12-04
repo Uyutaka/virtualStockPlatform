@@ -27,14 +27,15 @@
 				</thead>
 					<c:url var="updateLink" value="/property/sellCheck">
 						<c:param name="userId" value="${Property.userId}" />
-						<c:param name="stockName" value="${StockInfo.name}">
+						<c:param name="stockName" value="${StockInfo.name}" />
+						<c:param name="currenPrice" value="${currenPrice}" />
 					</c:url>
 						<thead class="thead-light">
 						<tr>
-							<th>${StockInfo.Name}</th>
-							<th>${Property.numStocks}</th>
-							<th>${StockInfo.lastRefreshedTime}</th>
-							<th>${Property.balance}</th>
+							<td>${StockInfo.Name}</td>
+							<td>${Property.numStocks}</td>
+							<td>${currenPrice}</td>
+							<td>${Property.balance}</td>
 						</tr>
 						</thead>
 				</table>
