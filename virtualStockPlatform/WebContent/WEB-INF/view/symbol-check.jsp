@@ -1,68 +1,36 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 
 <html>
 <head>
-<title>Add user</title>
+<title>List Users</title>
 <!-- reference our style sheet -->
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/add-user-style.css" />
-
 </head>
 <body>
+
 	<div id="wrapper">
 		<div id="header">
 			<h2>URM - User Relationship Manager</h2>
 		</div>
-	</div>
 
-
-	<div id="container">
-		<h3>Symbol check</h3>
-		<form:form action="symbolCheck" modelAttribute="stock" method="GET">
-			<!-- need to associate this data with "stock information" name -->
-			<form:hidden path="name" />
-
-			<table>
-				<tbody>
-					<tr>
-						<td><label>First name:</label></td>
-						<td><form:input path="firstName" /></td>
-					</tr>
-
-					<tr>
-						<td><label>Last name:</label></td>
-						<td><form:input path="lastName" /></td>
-					</tr>
-
-					<tr>
-						<td><label>Email:</label></td>
-						<td><form:input path="email" /></td>
-					</tr>
-
-					<tr>
-						<td><label>Balance:</label></td>
-						<td><form:input path="balance" /></td>
-					</tr>
-
-					<tr>
-						<td><label></label></td>
-						<td><input type="submit" value="Save" class="save" /></td>
-					</tr>
-
-
-				</tbody>
-			</table>
-
-
-		</form:form>
-
-		<div style=""></div>
-		<p>
-			<a href="${pageContext.request.contextPath}/user/list">Back to
-				List</a>
-		</p>
+		<div id="container">
+			<div id="content">
+				<select name='stock'>
+					<option value="${selected}" selected>${selected}</option>
+					<!-- loop over and load stocks -->
+					<c:forEach var="tempStock" items="${stock}">
+						<c:if test="${stock != selected}">
+							<td>${tempStock.name}</td>
+						</c:if>
+					</c:forEach>
+				</select>
+				<td><a href="${selectLink}">Check</a></td>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
