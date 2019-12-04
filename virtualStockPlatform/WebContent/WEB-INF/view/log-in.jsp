@@ -42,7 +42,9 @@
 					          <br><br>
 					
 					          <h5 class="sub-header">Don't have an account?</h5>
-					          <a href="/user/showFormForUpdate" class="sub-header">Click here</a>
+					          	<input type="button" value="Click here"
+									onclick="window.location.href='showFormForAdd'; return false;"
+									class="add-button btn btn-primary" />
 					
 					        </form>
 					

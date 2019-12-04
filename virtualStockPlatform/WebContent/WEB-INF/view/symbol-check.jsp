@@ -20,13 +20,8 @@
 		<div id="container">
 			<div id="content">
 				<select name='stock'>
-					<option value="${selected}" selected>${selected}</option>
-					<!-- loop over and load stocks -->
-					<c:forEach var="tempStock" items="${stock}">
-						<c:if test="${stock != selected}">
-							<td>${tempStock.name}</td>
-						</c:if>
-					</c:forEach>
+					<option value="APPLE">APPLE</option>
+					<option value="GOOGLE">GOOGLE</option>
 				</select>
 				<td><a href="${selectLink}">Check</a></td>
 			</div>

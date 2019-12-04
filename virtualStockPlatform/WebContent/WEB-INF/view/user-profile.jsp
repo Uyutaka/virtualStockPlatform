@@ -44,7 +44,7 @@
 				</table>	
 						<!-- display the update link -->
 						<input type="button" value="Edit"
-					onclick="window.location.href='showFormForAdd'; return false;"
+					onclick="window.location.href='${updateLink}'"
 					class="btn btn-dark" />				
 			</div>
 		</div>
