@@ -7,7 +7,8 @@
 <!-- reference our style sheet -->
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
-
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/add-user-style.css" />
 </head>
 <body>
 
@@ -18,46 +19,17 @@
 
 		<div id="container">
 			<div id="content">
-
-				<!-- put new button: Add Customer -->
-				<input type="button" value="Add User"
-					onclick="window.location.href='showFormForUpdate'; return false;"
-					class="add-button" />
-
-				<!-- add our html table here -->
-				<table>
-					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-						<th>Balance</th>
-						<th>Action</th>
-					</tr>
-
-					<!-- loop over and print our users -->
-					<c:forEach var="tempUser" items="${users}">
-						<!-- construct an "update" link with user id -->
-						<c:url var="updateLink" value="/user/showFormForUpdate">
-							<c:param name="userId" value="${tempUser.id}" />
-						</c:url>
-
-						<!-- construct an "delete" link with user id -->
-						<c:url var="deleteLink" value="/user/delete">
-							<c:param name="userId" value="${tempUser.id}" />
-						</c:url>
-						<tr>
-							<td>${tempUser.firstName}</td>
-							<td>${tempUser.lastName}</td>
-							<td>${tempUser.email}</td>
-							<td>${tempUser.balance}</td>
-							<!-- display the update link -->
-							<td><a href="${updateLink}">Update</a> | <a
-								href="${deleteLink}"
-								onclick="if(!(confirm('Are you sure you want to delete this user?'))) return false">Delete</a></td>
-						</tr>
+			
+				<select name='stock'>
+					<option value="${selected }" selected>${selected}</option>
+					<!-- loop over and load stocks -->
+					<c:forEach var="tempStock" items="${stock}">
+						<c:if test="${stock != selected}">
+							<td>${tempStock.name}</td>
+							<td><a href="${selectLink}">Check</a></td>
+						</c:if>
 					</c:forEach>
-
-				</table>
+				</select>
 			</div>
 		</div>
 	</div>

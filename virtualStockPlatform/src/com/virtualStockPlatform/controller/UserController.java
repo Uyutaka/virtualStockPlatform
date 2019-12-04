@@ -34,13 +34,14 @@ public class UserController {
 
 	@GetMapping("/list")
 	public String listCustomers(Model theModel) {
-		// get users from the service
-		List<User> theUsers = userService.getUsers();
-
-		// add the users to the model
-		theModel.addAttribute("users", theUsers);
-
-		return "list-users";
+		return "user_buy_sell";
+//		// get users from the service
+//		List<User> theUsers = userService.getUsers();
+//
+//		// add the users to the model
+//		theModel.addAttribute("users", theUsers);
+//
+//		return "list-users";
 	}
 
 	@GetMapping("/showFormForAdd")
