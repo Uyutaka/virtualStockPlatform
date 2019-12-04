@@ -7,18 +7,24 @@
 <!-- reference our style sheet -->
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link type="text/css" rel="stylesheet"
+<link type="text/css" type="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/user-profile.css"/>
-	<title>Login</title>
+	<TITLE>Login</TITLE>
 </head>
 
-<body  background="../resources/Login-wallpapers.jpg">
+<body background="${pageContext.request.contextPath}/resources/Login-Wallpaper.jpg">
+	<nav class="navigation-header"></nav>
+	      <nav class="navbar navbar-light bg-dark">
+	      <h2><font color="white">User Login platform</font></h2>
+	    </a>
+	    </nav>
+
+	<br><br><br>
 	<div id="wrapper">
 		<div id="header">
-			<h2>User Login platform</h2>
-			<div id="container">
+			<div align="center" id="container">
 				<div id="content">
-					<div class="card">
+					<div class="card text-white bg-secondary mb-3" style="max-width: 30rem;">
 					      <div class="card-body justify-content-center">
 					        <form class="form-login text-center">
 					
@@ -50,5 +56,3 @@
 	</div>
 </body>
 </html>
-
-	
