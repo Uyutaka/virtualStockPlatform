@@ -33,11 +33,9 @@
               				<hr><br>
               
 						  <input type="button" style="margin-right:50px;" id="submit" value="Buy"
-					onclick="" 
-               class="btn btn-dark"/>
-              <input type="button" id="submit" value="Sell"
-					onclick="" 
-              class="btn btn-dark"/>
+								onclick="window.location.href='${buyLink}'" class="btn btn-dark"/>
+			              <input type="button" id="submit" value="Sell"
+								onclick="window.location.href='${sellLink}'" class="btn btn-dark"/>
             </div>
 					</div>
 				</div>
