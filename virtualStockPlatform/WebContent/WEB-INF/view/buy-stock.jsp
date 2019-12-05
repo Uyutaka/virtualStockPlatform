@@ -25,10 +25,10 @@
 				<table class=table>
 					 <thead class="thead-dark">
 						<tr>
-							<td>Stock Name</td>
-							<td>Quantity Hold</td>
-							<td>Current Price</td>
-							<td>Balance</td>
+							<th>Stock Name</th>
+							<th>Quantity Hold</th>
+							<th>Current Price</th>
+							<th>Balance</th>
 					   </tr>
 					</thead>
 							<c:set var = "balance" value="${user.balance}" />
@@ -45,10 +45,11 @@
 							</thead>
 					</table>
 							<!-- display the balance text use request.getParameter("BuyQuantity")-->	
-							Quantity to buy(maximum # to buy <fmt:formatNumber type = "number" 
-         						maxFractionDigits="0" value = "${balance/price - 1}" />):  <form:input path="numToBuyOrSell" />
+							<font face="verdana" size="4"> Buy Quantity(#limit: <fmt:formatNumber type = "number" 
+         						maxFractionDigits="0" value = "${balance/price - 1}" />):  <form:input size="8" maxlength="4" 
+         							path="numToBuyOrSell" /> </font>
 							<!-- display the update link -->
-							<input type="submit" value="Check" class="btn btn-dark" />
+							<input type="submit" value="Order" class="btn-outline-dark btn-lg" style="margin-left:30px;" />
 				</form:form>			
 			</div>
 		</div>

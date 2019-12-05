@@ -46,9 +46,11 @@
 							</thead>
 					</table>
 							<!-- display the balance text use request.getParameter("SellQuantity")-->	
-							<font face="verdana" size="4">Quantity to sell: </font> <form:input path="numToBuyOrSell" />
+							<font face="verdana" size="4">Sell Quantity: (#limit: <fmt:formatNumber type = "number" 
+         						maxFractionDigits="0" value = "${property.numStocks}" />)</font> <form:input size="8" maxlength="4"
+         							path="numToBuyOrSell" />
 							<!-- display the update link -->
-							<input type="submit" value="Check" class="btn btn-dark" style="margin-left:3s0px;" />
+							<input type="submit" value="Order" class="btn btn-dark" style="margin-left:30px;" />
 				</form:form>			
 			</div>
 		</div>
