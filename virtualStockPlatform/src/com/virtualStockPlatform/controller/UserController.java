@@ -151,7 +151,7 @@ public class UserController {
 		theModel.addAttribute("stock", stock);
 		theModel.addAttribute("price", price);
 		theModel.addAttribute("transaction", transaction);
-		return "redirect:/user/sellStock";
+		return "sell-stock";
 	}
 	
 	@PostMapping("/sell")
