@@ -122,7 +122,7 @@ public class UserController {
 //		return "sell-stock";
 //	}
 	
-	@PostMapping("/sellStock")
+	@GetMapping("/sellStock")
 	public String sellStock(Model theModel) {
 		// get the user from the database
 		User theUser = userService.getUser(1);
@@ -139,20 +139,9 @@ public class UserController {
 		return "sell-stock";
 	}
 	
-	@GetMapping("/sell")
-	public String sellStockView(Model theModel) {
-		// get the user from the database
-		User theUser = userService.getUser(1);
-		// Get the property based on the id and stock name.
-		Property property = userService.getProperty(1, "GOOG");
-		// Get the Stock information and price
-		Stock stock = getStockByName("GOOG");
-		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
-		// set user as a model attribute to pre-populate the form
-		theModel.addAttribute("user", theUser);
-		theModel.addAttribute("property", property);
-		theModel.addAttribute("stock", stock);
-		theModel.addAttribute("price", price);
+	@PostMapping("/sell")
+	public String sellStockView(Model theModel, @ModelAttribute("property") Property property) {
+		System.out.println("asfasdfjnasd" + property);
 		return "sell-stock";
 	}
 	

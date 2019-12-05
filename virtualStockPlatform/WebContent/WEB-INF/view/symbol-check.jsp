@@ -24,7 +24,7 @@
 					<option value="GOOG">GOOGLE</option>
 				</select>
 				
-				<c:url var="selectLink" value="/user/sell">
+				<c:url var="selectLink" value="/user/sellStock">
 							<c:param name="userId" value="${user.id}" />
 				</c:url>
 				<td><a href="${selectLink}">Check</a></td>

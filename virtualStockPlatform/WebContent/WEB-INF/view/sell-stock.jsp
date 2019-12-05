@@ -17,8 +17,11 @@
 		</div>
 		<div id="container">
 			<div id="content">
-			<form:form action="sellStock" modelAttribute="property" method="POST">
+			<form:form action="sell" modelAttribute="property" method="POST">
 				<form:hidden path="Id" />
+				<form:hidden path="numStocks"/>
+				<form:hidden path="stockName" />
+				<form:hidden path="userId" />
 				<table class=table>
 					 <thead class="thead-dark">
 						<tr>
