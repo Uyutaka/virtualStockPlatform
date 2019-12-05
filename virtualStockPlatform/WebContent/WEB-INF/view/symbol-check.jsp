@@ -20,7 +20,7 @@
 
 		<div id="container">
 			<div id="content">
-				<form:form action="sellStock" modelAttribute="userSymbolCheck" method="POST">
+				<form:form action="stockView" modelAttribute="userSymbolCheck" method="POST">
 					<form:hidden path="userId" />
 					<form:select path="stockName" items="${stocks}"/>
 					<input type="submit" value="Check" />

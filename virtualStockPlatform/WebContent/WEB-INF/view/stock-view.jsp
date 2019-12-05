@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 
 <html>
@@ -22,7 +23,7 @@
 					<div class="card-body justify-content-center">
             <div id="leftPart">
               			<p><font face="verdana" size="4">1. Stock Name</font></p>
-              				<p>${property.stockName}</p>
+              				<p>${userSymbolCheck.stockName}</p>
 							<hr><br>
 					    <p><font face="verdana" size="4">2. Current Price</font></p>
               				 <p>${price.close}</p>
@@ -30,11 +31,21 @@
 					    <p><font face="verdana" size="4">3. Stock Volume</font></p>
               				<p>${price.volume}</p>
               				<hr><br>
-              
-						  <input type="button" style="margin-right:50px;" id="submit" value="Buy"
-								onclick="window.location.href='${buyLink}'" class="btn btn-dark"/>
-			              <input type="button" id="submit" value="Sell"
-								onclick="window.location.href='${sellLink}'" class="btn btn-dark"/>
+              				
+              			<c:url var="buy" value="/user/buyStock">
+							<c:param name="userId" value="${userSymbolCheck.userId}" />
+							<c:param name="stockName" value="${userSymbolCheck.stockName}" />
+						</c:url>
+
+						<!-- construct an "delete" link with user id -->
+						<c:url var="sell" value="/user/sellStock">
+							<c:param name="userId" value="${userSymbolCheck.userId}" />
+							<c:param name="stockName" value="${userSymbolCheck.stockName}" />
+						</c:url>
+              			
+              			<a href="${buy}">Buy</a>
+              			
+              			<a href="${sell}">Sell</a>
             </div>
 					</div>
 				</div>

@@ -44,7 +44,14 @@
 						<!-- display the update link -->
 						<input type="button" value="Edit"
 					onclick="window.location.href='${updateLink}'"
-					class="btn btn-dark" />				
+					class="btn btn-dark" />		
+					<c:url var="checkLink" value="/user/symbolCheck">
+							<c:param name="userId" value="${user.id}" />
+					</c:url>
+						<input type="button" value="Check to buy/sell stocks"
+					onclick="window.location.href='${checkLink}'"
+					class="btn btn-dark" />	
+							
 			</div>
 		</div>
 	</div>

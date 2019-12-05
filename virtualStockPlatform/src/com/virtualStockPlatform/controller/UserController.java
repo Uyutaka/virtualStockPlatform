@@ -131,17 +131,33 @@ public class UserController {
 //		return "sell-stock";
 //	}
 	
-	@PostMapping("/sellStock")
-	public String sellStock(Model theModel, @ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
-		System.out.println("TEST TEST ID: " + userSymbolCheck.getUserId());
-		System.out.println("TEST TEST stockName: " + userSymbolCheck.getStockName());
+	@PostMapping("/stockView")
+	public String stockView(Model theModel, 
+			@ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
+		String stockName = userSymbolCheck.getStockName();
+		Stock stock = getStockByName(stockName);
+		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		theModel.addAttribute("price", price);
+		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
+		return "stock-view";
+	}
+	
+	
+	
+	
+	// get from sell-stock
+	@GetMapping("/sellStock")
+	public String sellStock(Model theModel, @RequestParam("userId") int theId,
+			@RequestParam("stockName") String stockName) {
+		System.out.println("TEST TEST ID: " + theId);
+		System.out.println("TEST TEST stockName: " + stockName);
 		
 		// get the user from the database
-		User theUser = userService.getUser(userSymbolCheck.getUserId());
+		User theUser = userService.getUser(theId);
 		// Get the property based on the id and stock name.
-		Property property = userService.getProperty(userSymbolCheck.getUserId(), userSymbolCheck.getStockName());
+		Property property = userService.getProperty(theId, stockName);
 		// Get the Stock information and price
-		Stock stock = getStockByName(userSymbolCheck.getStockName());
+		Stock stock = getStockByName(stockName);
 		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
 		// Add transaction
 		Transaction transaction = new Transaction(theUser.getId(), property.getStockName(), price.getClose());
@@ -173,7 +189,15 @@ public class UserController {
 			property.setNumStocks(property.getNumStocks() - numberToSell);
 			userService.saveProperty(property);
 		}
-		return "sell-stock";
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+		// TODO temporally use the user of index 0
+		// Please change it to the current user.
+		User tmpUser = theUsers.get(0);
+
+		// add the user to the model
+		theModel.addAttribute("user", tmpUser);
+		return "user-profile";
 	}
 	
 	
