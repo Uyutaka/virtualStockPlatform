@@ -33,10 +33,6 @@ public class User {
 	@Column(name="balance")
 	private Double balance;
 	
-//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-//	@JoinColumn(name="user_id")
-//	private List<Property> properties;
-	
 	public User() {
 		
 	}
