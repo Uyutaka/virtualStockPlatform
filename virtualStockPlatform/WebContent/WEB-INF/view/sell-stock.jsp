@@ -17,8 +17,10 @@
 		</div>
 		<div id="container">
 			<div id="content">
-			<form:form action="sellStock" modelAttribute="property" method="POST">
-				<form:hidden path="Id" />
+			<form:form action="sell" modelAttribute="transaction" method="POST">
+				<form:hidden path="userId" />
+				<form:hidden path="price"/>
+				<form:hidden path="stockName" />
 				<table class=table>
 					 <thead class="thead-dark">
 						<tr>
@@ -38,7 +40,7 @@
 							</thead>
 					</table>
 							<!-- display the balance text use request.getParameter("SellQuantity")-->	
-							Quantity to sell <input type="text" id="SellQuantity" placeholder="type # of stocks" />
+							Quantity to sell:  <form:input path="numToBuyOrSell" />
 							<!-- display the update link -->
 							<input type="submit" value="Check" class="btn btn-dark" />
 				</form:form>			

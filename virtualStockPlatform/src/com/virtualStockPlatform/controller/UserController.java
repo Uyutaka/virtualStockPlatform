@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,9 @@ import com.virtualStockPlatform.api.Api;
 import com.virtualStockPlatform.entity.Price;
 import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.Stock;
+import com.virtualStockPlatform.entity.Transaction;
 import com.virtualStockPlatform.entity.User;
+import com.virtualStockPlatform.entity.UserSymbolCheck;
 import com.virtualStockPlatform.service.UserService;
 
 @Controller
@@ -105,8 +108,14 @@ public class UserController {
 	public String symbolCheck(@RequestParam("userId") int theId, Model theModel) {
 		// get the user from the db
 		User theUser = userService.getUser(theId);
+		Map<String, String> stocks = new HashMap<>();
+        stocks.put("AMZN", "AMZN");
+        stocks.put("GOOG", "GOOG");
 		// set user as a model attribute to pre-populate the form
 		theModel.addAttribute("user", theUser);
+		theModel.addAttribute("stocks", stocks);
+		UserSymbolCheck userSymbolCheck = new UserSymbolCheck(theId);
+		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
 		return "symbol-check";
 	}
 	
@@ -123,36 +132,31 @@ public class UserController {
 //	}
 	
 	@PostMapping("/sellStock")
-	public String sellStock(Model theModel) {
+	public String sellStock(Model theModel, @ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
+		System.out.println("TEST TEST ID: " + userSymbolCheck.getUserId());
+		System.out.println("TEST TEST stockName: " + userSymbolCheck.getStockName());
+		
 		// get the user from the database
-		User theUser = userService.getUser(1);
+		User theUser = userService.getUser(userSymbolCheck.getUserId());
 		// Get the property based on the id and stock name.
-		Property property = userService.getProperty(1, "GOOG");
+		Property property = userService.getProperty(userSymbolCheck.getUserId(), userSymbolCheck.getStockName());
 		// Get the Stock information and price
-		Stock stock = getStockByName("GOOG");
+		Stock stock = getStockByName(userSymbolCheck.getStockName());
 		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		// Add transaction
+		Transaction transaction = new Transaction(theUser.getId(), property.getStockName(), price.getClose());
 		// set user as a model attribute to pre-populate the form
 		theModel.addAttribute("user", theUser);
 		theModel.addAttribute("property", property);
 		theModel.addAttribute("stock", stock);
 		theModel.addAttribute("price", price);
+		theModel.addAttribute("transaction", transaction);
 		return "sell-stock";
 	}
 	
-	@GetMapping("/sell")
-	public String sellStockView(Model theModel) {
-		// get the user from the database
-		User theUser = userService.getUser(1);
-		// Get the property based on the id and stock name.
-		Property property = userService.getProperty(1, "GOOG");
-		// Get the Stock information and price
-		Stock stock = getStockByName("GOOG");
-		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
-		// set user as a model attribute to pre-populate the form
-		theModel.addAttribute("user", theUser);
-		theModel.addAttribute("property", property);
-		theModel.addAttribute("stock", stock);
-		theModel.addAttribute("price", price);
+	@PostMapping("/sell")
+	public String sellStockView(Model theModel, @ModelAttribute("transaction") Transaction transaction) {
+		System.out.println(transaction);
 		return "sell-stock";
 	}
 	
