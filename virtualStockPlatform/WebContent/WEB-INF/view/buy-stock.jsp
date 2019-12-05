@@ -5,17 +5,16 @@
 
 <html>
 <head>
+<title>User Buying</title>
 <!-- reference our style sheet -->
-<!-- Bootstrap CSS -->
-<title>User Selling</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/sell-stock.css"/>
+	href="${pageContext.request.contextPath}/resources/css/buy-stock.css"/>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="header">
-			<h2>Selling Stock platform</h2>
+			<h2>Buying Stock platform</h2>
 		</div>
 		<div id="container">
 			<div id="content">
@@ -26,10 +25,10 @@
 				<table class=table>
 					 <thead class="thead-dark">
 						<tr>
-							<th>Stock Name</th>
-							<th>Quantity Hold</th>
-							<th>Current Price</th>
-							<th>Balance</th>
+							<td>Stock Name</td>
+							<td>Quantity Hold</td>
+							<td>Current Price</td>
+							<td>Balance</td>
 					   </tr>
 					</thead>
 							<c:set var = "balance" value="${user.balance}" />
@@ -45,10 +44,11 @@
 							</tr>
 							</thead>
 					</table>
-							<!-- display the balance text use request.getParameter("SellQuantity")-->	
-							<font face="verdana" size="4">Quantity to sell: </font> <form:input path="numToBuyOrSell" />
+							<!-- display the balance text use request.getParameter("BuyQuantity")-->	
+							Quantity to buy(maximum # to buy <fmt:formatNumber type = "number" 
+         						maxFractionDigits="0" value = "${balance/price}" />):  <form:input path="numToBuyOrSell" />
 							<!-- display the update link -->
-							<input type="submit" value="Check" class="btn btn-dark" style="margin-left:3s0px;" />
+							<input type="submit" value="Check" class="btn btn-dark" />
 				</form:form>			
 			</div>
 		</div>

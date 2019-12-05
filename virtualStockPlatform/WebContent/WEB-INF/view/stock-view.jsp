@@ -3,13 +3,12 @@
 
 <html>
 <head>
-<title>User Profile</title>
+<title>Stock View</title>
 <!-- reference our style sheet -->
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/user-profile.css"/>
-	<title>Profile</title>
+	href="${pageContext.request.contextPath}/resources/css/stock-view.css"/>
 </head>
 
 <body>
