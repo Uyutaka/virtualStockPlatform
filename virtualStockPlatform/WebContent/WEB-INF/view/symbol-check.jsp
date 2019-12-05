@@ -26,6 +26,7 @@
 				
 				<c:url var="selectLink" value="/user/sell">
 							<c:param name="userId" value="${user.id}" />
+							<c:param name="stockName" value="${StockInfo.name}" />
 				</c:url>
 				<td><a href="${selectLink}">Check</a></td>
 			</div>
