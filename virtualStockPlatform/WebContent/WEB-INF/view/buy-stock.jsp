@@ -18,7 +18,7 @@
 		</div>
 		<div id="container">
 			<div id="content">
-			<form:form action="sell" modelAttribute="transaction" method="POST">
+			<form:form action="buy" modelAttribute="transaction" method="POST">
 				<form:hidden path="userId" />
 				<form:hidden path="price"/>
 				<form:hidden path="stockName" />
@@ -46,7 +46,7 @@
 					</table>
 							<!-- display the balance text use request.getParameter("BuyQuantity")-->	
 							Quantity to buy(maximum # to buy <fmt:formatNumber type = "number" 
-         						maxFractionDigits="0" value = "${balance/price}" />):  <form:input path="numToBuyOrSell" />
+         						maxFractionDigits="0" value = "${balance/price - 1}" />):  <form:input path="numToBuyOrSell" />
 							<!-- display the update link -->
 							<input type="submit" value="Check" class="btn btn-dark" />
 				</form:form>			
