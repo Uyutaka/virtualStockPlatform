@@ -136,10 +136,23 @@ public class UserController {
 	public String stockView(Model theModel, 
 			@ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
 		String stockName = userSymbolCheck.getStockName();
+		int theId = userSymbolCheck.getUserId();
 		Stock stock = getStockByName(stockName);
 		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		// Get the property based on the id and stock name.
+		Property property = userService.getProperty(theId, stockName);
+		
+		// In Case the property is null which means the user doesn't have this stock
+		if (property == null) {
+			property = new Property();
+			property.setUserId(theId);
+			property.setNumStocks(0);
+			property.setStockName(stockName);
+			userService.saveProperty(property);
+		}
 		theModel.addAttribute("price", price);
 		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
+		theModel.addAttribute("property", property);
 		return "stock-view";
 	}
 	
