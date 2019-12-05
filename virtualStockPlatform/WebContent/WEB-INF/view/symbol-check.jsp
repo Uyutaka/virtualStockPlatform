@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 
 <html>
@@ -19,16 +20,11 @@
 
 		<div id="container">
 			<div id="content">
-				<select name='stock'>
-					<option value="${selected}" selected>${selected}</option>
-					<!-- loop over and load stocks -->
-					<c:forEach var="tempStock" items="${stock}">
-						<c:if test="${stock != selected}">
-							<td>${tempStock.name}</td>
-						</c:if>
-					</c:forEach>
-				</select>
-				<td><a href="${selectLink}">Check</a></td>
+				<form:form action="sellStock" modelAttribute="userSymbolCheck" method="POST">
+					<form:hidden path="userId" />
+					<form:select path="stockName" items="${stocks}"/>
+					<input type="submit" value="Check" />
+				</form:form>
 			</div>
 		</div>
 	</div>

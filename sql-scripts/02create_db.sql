@@ -30,7 +30,7 @@ CREATE TABLE `property` (
   
   FOREIGN KEY (`user_id`) 
   REFERENCES `user` (`id`) 
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+  ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
@@ -43,12 +43,7 @@ INSERT INTO `user` VALUES
 
 INSERT INTO `property` VALUES 
   (1, 10, 'GOOG', 1),
-  (2, 50, 'GOOG', 2),
-  (3, 60, 'AMZN', 3),
-  (4, 50, 'AMZN', 4),
-  (5, 30, 'NKE', 1),
-  (6, 40, 'AAPL', 3),
-  (7, 15, 'NVDA', 4),
-  (8, 25, 'NKE', 5);
+  (5, 30, 'AMZN', 1);
+
 
 SET FOREIGN_KEY_CHECKS = 1;
