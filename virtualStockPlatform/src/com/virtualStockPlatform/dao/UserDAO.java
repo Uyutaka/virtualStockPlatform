@@ -14,6 +14,8 @@ public interface UserDAO {
 
 	public void deleteUser(int theId);
 	
+	public Property getProperty(int theId, String stockName);
+	
 	public List<Property> getProperties(int theId);
 	
 	public double getSumOfStocks(List<Property> properties);

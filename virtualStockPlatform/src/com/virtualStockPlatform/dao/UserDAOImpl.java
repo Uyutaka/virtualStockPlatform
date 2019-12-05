@@ -167,4 +167,23 @@ public class UserDAOImpl implements UserDAO{
 		currentSession.saveOrUpdate(theUser);
 		currentSession.saveOrUpdate(property);	
 	}
+
+
+	@Override
+	public Property getProperty(int theId, String stockName) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// create a query
+		Query<Property> theQuery = currentSession.createQuery("from Property where userId=:Id and stockName=:Name", Property.class);
+		theQuery.setParameter("Id", theId);
+		theQuery.setParameter("Name", stockName);
+		// execute query and get result list
+		Property property = theQuery.uniqueResult();
+		System.out.println(property);
+		
+		// return the results
+		
+		return property;
+	}
 }

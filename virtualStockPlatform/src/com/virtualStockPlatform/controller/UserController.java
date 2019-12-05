@@ -1,10 +1,13 @@
 package com.virtualStockPlatform.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.api.Api;
+import com.virtualStockPlatform.entity.Price;
 import com.virtualStockPlatform.entity.Property;
+import com.virtualStockPlatform.entity.Stock;
 import com.virtualStockPlatform.entity.User;
 import com.virtualStockPlatform.service.UserService;
 
@@ -93,7 +100,64 @@ public class UserController {
 		userService.deleteUser(theId);
 		return "redirect:/user/list";
 	}
-
+	
+	@GetMapping("/symbolCheck")
+	public String symbolCheck(@RequestParam("userId") int theId, Model theModel) {
+		// get the user from the db
+		User theUser = userService.getUser(theId);
+		// set user as a model attribute to pre-populate the form
+		theModel.addAttribute("user", theUser);
+		return "symbol-check";
+	}
+	
+//	@GetMapping("/sell")
+//	public String sellStock(@RequestParam("userId") int theId, 
+//			@RequestParam("stockName") String stockName, Model theModel) {
+//		// get the user from the db
+//		User theUser = userService.getUser(theId);
+//		// set user as a model attribute to pre-populate the form
+//		System.out.println(theId);
+//		System.out.println(stockName);
+//		theModel.addAttribute("user", theUser);
+//		return "sell-stock";
+//	}
+	
+	@PostMapping("/sellStock")
+	public String sellStock(Model theModel) {
+		// get the user from the database
+		User theUser = userService.getUser(1);
+		// Get the property based on the id and stock name.
+		Property property = userService.getProperty(1, "GOOG");
+		// Get the Stock information and price
+		Stock stock = getStockByName("GOOG");
+		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		// set user as a model attribute to pre-populate the form
+		theModel.addAttribute("user", theUser);
+		theModel.addAttribute("property", property);
+		theModel.addAttribute("stock", stock);
+		theModel.addAttribute("price", price);
+		return "sell-stock";
+	}
+	
+	@GetMapping("/sell")
+	public String sellStockView(Model theModel) {
+		// get the user from the database
+		User theUser = userService.getUser(1);
+		// Get the property based on the id and stock name.
+		Property property = userService.getProperty(1, "GOOG");
+		// Get the Stock information and price
+		Stock stock = getStockByName("GOOG");
+		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		// set user as a model attribute to pre-populate the form
+		theModel.addAttribute("user", theUser);
+		theModel.addAttribute("property", property);
+		theModel.addAttribute("stock", stock);
+		theModel.addAttribute("price", price);
+		return "sell-stock";
+	}
+	
+	
+	
 	@GetMapping("/test")
 	public String test() {
 		Api api = new Api();
@@ -129,6 +193,30 @@ public class UserController {
 		List<Property> res = userService.getProperties(1);
 		userService.getSumOfStocks(res);
 		return "test-json";
+	}
+	
+	private Stock getStockByName(String name) {
+		String text = "";
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(
+				String.format("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=1min&apikey=ACPN4KEH4052XAQ6", name),
+				String.class);
+
+		if (HttpStatus.OK == response.getStatusCode()) {
+			text = response.getBody().toString();
+		} else {
+			System.out.println("Error");
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Stock stock = new Stock();
+		try {
+			// JSON string to Java object
+			stock = mapper.readValue(text, Stock.class);
+		} catch (IOException e) {
+			System.out.println("Test failed.");
+			e.printStackTrace();
+		}
+		return stock;
 	}
 
 }

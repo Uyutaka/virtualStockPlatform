@@ -70,4 +70,10 @@ public class UserServiceImpl implements UserService {
 	public void sellProperty(User theUser, Property property) {
 		userDAO.sellProperty(theUser, property);
 	}
+
+	@Override
+	@Transactional
+	public Property getProperty(int theId, String stockName) {
+		return userDAO.getProperty(theId, stockName);
+	}
 }

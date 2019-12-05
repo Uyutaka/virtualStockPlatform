@@ -19,10 +19,14 @@
 
 		<div id="container">
 			<div id="content">
-				<select name='stock'>
-					<option value="APPLE">APPLE</option>
-					<option value="GOOGLE">GOOGLE</option>
+				<select id = 'stockName' name='stock'>
+					<option value="AMZN">AMAZON</option>
+					<option value="GOOG">GOOGLE</option>
 				</select>
+				
+				<c:url var="selectLink" value="/user/sell">
+							<c:param name="userId" value="${user.id}" />
+				</c:url>
 				<td><a href="${selectLink}">Check</a></td>
 			</div>
 		</div>
