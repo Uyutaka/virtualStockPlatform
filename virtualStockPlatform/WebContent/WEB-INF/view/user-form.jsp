@@ -40,11 +40,8 @@
 						<td><label>Email:</label></td>
 						<td><form:input path="email" /></td>
 					</tr>
+					<form:hidden path="balance" />
 
-					<tr>
-						<td><label>Balance:</label></td>
-						<td><form:input path="balance" /></td>
-					</tr>
 
 					<tr>
 						<td><label></label></td>
