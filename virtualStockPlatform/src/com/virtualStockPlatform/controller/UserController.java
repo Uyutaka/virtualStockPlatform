@@ -151,12 +151,28 @@ public class UserController {
 		theModel.addAttribute("stock", stock);
 		theModel.addAttribute("price", price);
 		theModel.addAttribute("transaction", transaction);
-		return "sell-stock";
+		return "redirect:/user/sellStock";
 	}
 	
 	@PostMapping("/sell")
 	public String sellStockView(Model theModel, @ModelAttribute("transaction") Transaction transaction) {
 		System.out.println(transaction);
+		double price = transaction.getPrice();
+		int numberToSell = transaction.getNumToBuyOrSell();
+		int userId = transaction.getUserId();
+		double moneyGet = price * numberToSell;
+		String stockName = transaction.getStockName();
+		User theUser = userService.getUser(userId);
+		theUser.setBalance(theUser.getBalance() + moneyGet);
+		userService.saveUser(theUser);
+		Property property = userService.getProperty(userId, stockName);
+		int numberOwned = property.getNumStocks();
+		if (numberOwned == numberToSell) {
+			userService.deleteProperty(property.getId());
+		} else {
+			property.setNumStocks(property.getNumStocks() - numberToSell);
+			userService.saveProperty(property);
+		}
 		return "sell-stock";
 	}
 	

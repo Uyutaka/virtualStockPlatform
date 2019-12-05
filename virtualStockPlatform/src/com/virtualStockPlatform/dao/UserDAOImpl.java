@@ -186,4 +186,28 @@ public class UserDAOImpl implements UserDAO{
 		
 		return property;
 	}
+
+
+	@Override
+	public void saveProperty(Property property) {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		// save/update the property
+		currentSession.saveOrUpdate(property);
+		
+	}
+
+
+	@Override
+	public void deleteProperty(int id) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+	
+		// delete object with primary key
+		Query theQuery =
+				currentSession.createQuery("delete from Property where id=:Id");
+		theQuery.setParameter("Id", id);
+		theQuery.executeUpdate();
+	}
+	
 }
