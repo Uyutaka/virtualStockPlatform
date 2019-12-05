@@ -111,6 +111,7 @@ public class UserController {
 		Map<String, String> stocks = new HashMap<>();
         stocks.put("AMZN", "AMZN");
         stocks.put("GOOG", "GOOG");
+        stocks.put("NVDA", "NVDA");
 		// set user as a model attribute to pre-populate the form
 		theModel.addAttribute("user", theUser);
 		theModel.addAttribute("stocks", stocks);

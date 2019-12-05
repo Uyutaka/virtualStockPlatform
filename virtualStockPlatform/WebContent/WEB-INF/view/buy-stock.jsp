@@ -46,7 +46,7 @@
 					</table>
 							<!-- display the balance text use request.getParameter("BuyQuantity")-->	
 							Quantity to buy(maximum # to buy <fmt:formatNumber type = "number" 
-         						maxFractionDigits="0" value = "${balance/price}" />):  <form:input path="numToBuyOrSell" />
+         						maxFractionDigits="0" value = "${balance/price - 1}" />):  <form:input path="numToBuyOrSell" />
 							<!-- display the update link -->
 							<input type="submit" value="Check" class="btn btn-dark" />
 				</form:form>			
