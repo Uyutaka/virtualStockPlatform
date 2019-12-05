@@ -18,7 +18,7 @@
 		</div>
 		<div id="container">
 			<div id="content">
-			<form:form action="sell" modelAttribute="transaction" method="POST">
+			<form:form action="buy" modelAttribute="transaction" method="POST">
 				<form:hidden path="userId" />
 				<form:hidden path="price"/>
 				<form:hidden path="stockName" />
