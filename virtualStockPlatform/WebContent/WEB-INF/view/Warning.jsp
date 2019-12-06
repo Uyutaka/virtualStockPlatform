@@ -16,6 +16,9 @@
 	<div id="wrapper">
 		<div id="container">>
 				<div align="center">
+		<div id="container">
+			<div id="content">
+				<div align="center" id="container">
 					<div id="content">
 						<br><br><br><br><br><br>
 						<div class="card mb-3" style="max-width: 50rem;">
