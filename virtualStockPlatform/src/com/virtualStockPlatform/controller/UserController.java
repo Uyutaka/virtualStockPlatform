@@ -221,10 +221,20 @@ public class UserController {
 		double moneyGet = price * numberToSell;
 		String stockName = transaction.getStockName();
 		User theUser = userService.getUser(userId);
-		theUser.setBalance(theUser.getBalance() + moneyGet);
-		userService.saveUser(theUser);
+
 		Property property = userService.getProperty(userId, stockName);
 		int numberOwned = property.getNumStocks();
+		
+		// invalid input
+		if (numberOwned < numberToSell) {
+			theModel.addAttribute("user", theUser);
+			return "Warning";
+		}
+		
+		// save the sell
+		theUser.setBalance(theUser.getBalance() + moneyGet);
+		userService.saveUser(theUser);
+		
 		if (numberOwned == numberToSell) {
 			userService.deleteProperty(property.getId());
 		} else {
@@ -251,7 +261,16 @@ public class UserController {
 		double moneySpent = price * numberToBuy;
 		String stockName = transaction.getStockName();
 		User theUser = userService.getUser(userId);
-		theUser.setBalance(theUser.getBalance() - moneySpent);
+		double balance = theUser.getBalance();
+		
+		// invalid input
+		if (balance < moneySpent) {
+			theModel.addAttribute("user", theUser);
+			return "Warning";
+		}
+		
+		// save change
+		theUser.setBalance(balance - moneySpent);
 		userService.saveUser(theUser);
 		Property property = userService.getProperty(userId, stockName);
 
@@ -260,7 +279,7 @@ public class UserController {
 		userService.saveProperty(property);
 		// get users from the service
 		List<User> theUsers = userService.getUsers();
-		// TODO temporally use the user of index 0
+		
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
 

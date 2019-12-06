@@ -28,8 +28,8 @@
 					        		class="img-rounded" height="200" width="200">
 								<h1 class="display-4" color="red">Invalid Operation Warning</h1>
 								<p style="font-family:courier;"><u>Your operation is invalid due 
-									since your operation already access the balance you have! </u></p>
-					        	<button type="button" class="btn btn-danger" onclick="">Back to profile</button>
+									to your operation already exceed the balance/number of stocks you have! </u></p>
+					        	<button type="button" class="btn btn-danger" onclick="window.location.href='profile'">Back to profile</button>
 					      </div>
 					 </div>
 				</div>
