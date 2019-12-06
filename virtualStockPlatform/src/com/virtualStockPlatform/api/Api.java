@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.entity.Stock;
 
 public class Api {
-	private String[] SYMBOLS = {"GOOG", "AMZN"};
+	private String[] SYMBOLS = {"GOOG", "AMZN", "NVDA"};
 	
 	// Return symbol's stock price
 	// Return 0 when an error happens

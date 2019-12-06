@@ -2,6 +2,7 @@ package com.virtualStockPlatform.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.api.Api;
+import com.virtualStockPlatform.entity.Pair;
 import com.virtualStockPlatform.entity.Price;
 import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.Stock;
@@ -119,19 +121,7 @@ public class UserController {
 		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
 		return "symbol-check";
 	}
-	
-//	@GetMapping("/sell")
-//	public String sellStock(@RequestParam("userId") int theId, 
-//			@RequestParam("stockName") String stockName, Model theModel) {
-//		// get the user from the db
-//		User theUser = userService.getUser(theId);
-//		// set user as a model attribute to pre-populate the form
-//		System.out.println(theId);
-//		System.out.println(stockName);
-//		theModel.addAttribute("user", theUser);
-//		return "sell-stock";
-//	}
-	
+
 	@PostMapping("/stockView")
 	public String stockView(Model theModel, 
 			@ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
@@ -277,6 +267,45 @@ public class UserController {
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
 		return "user-profile";
+	}
+	
+	@GetMapping("/rank")
+	public String userRanks(Model theModel) {
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+
+		// Get all comapany's stock prices
+		Api api = new Api();
+		HashMap<String, Double> priceMap = api.getAllPrices();
+
+		// store users' sum of stocks
+		List<Double> theSum = new ArrayList<Double>();
+		
+		if (!api.isError(priceMap)) {
+			for (int i = 0; i < theUsers.size(); i++) {
+				double price = 0;
+				List<Property> prop = userService.getProperties(theUsers.get(i).getId());
+				for (int j = 0; j < prop.size(); j++) {
+					if (priceMap.containsKey(prop.get(j).getStockName())) {
+						price += priceMap.get(prop.get(j).getStockName()) * prop.get(j).getNumStocks();
+					}
+				}
+				price += theUsers.get(i).getBalance();
+				theSum.add(price);
+			}
+		}else {
+			System.out.println("Error happens");
+		}
+		
+		List<Pair> orderedUsers = new ArrayList<>();
+		for (int i = 0; i < theUsers.size(); i++) {
+			orderedUsers.add(new Pair(theUsers.get(i), theSum.get(i)));
+		}
+		Collections.sort(orderedUsers, (P1, P2) -> P2.getProperties() - P1.getProperties() > 0 ? 1 : -1);
+
+		// add the users to the model
+		theModel.addAttribute("allProperties", orderedUsers);
+		return "users-rank";
 	}
 	
 	

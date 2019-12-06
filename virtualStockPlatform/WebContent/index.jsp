@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<a href="user/rank">user ranks</a>
+<br>
 <a href="user/list">user list</a>
 <br>
 <a href="user/profile">user profile</a>
