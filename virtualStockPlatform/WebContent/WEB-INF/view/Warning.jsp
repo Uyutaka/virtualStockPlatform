@@ -14,10 +14,6 @@
 <body >
 
 	<div id="wrapper">
-		<div id="header">
-			<h2>Symbol Check</h2>
-		</div>
-
 		<div id="container">
 			<div id="content">
 				<div align="center" id="container">
