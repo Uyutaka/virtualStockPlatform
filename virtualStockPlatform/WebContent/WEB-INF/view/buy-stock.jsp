@@ -5,21 +5,20 @@
 
 <html>
 <head>
+<title>User Buying</title>
 <!-- reference our style sheet -->
-<!-- Bootstrap CSS -->
-<title>User Selling</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/sell-stock.css"/>
+	href="${pageContext.request.contextPath}/resources/css/buy-stock.css"/>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="header">
-			<h2>Selling Stock platform</h2>
+			<h2>Buying Stock platform</h2>
 		</div>
 		<div id="container">
 			<div id="content">
-			<form:form action="sell" modelAttribute="transaction" method="POST">
+			<form:form action="buy" modelAttribute="transaction" method="POST">
 				<form:hidden path="userId" />
 				<form:hidden path="price"/>
 				<form:hidden path="stockName" />
@@ -45,12 +44,12 @@
 							</tr>
 							</thead>
 					</table>
-							<!-- display the balance text use request.getParameter("SellQuantity")-->	
-							<font face="verdana" size="4">Sell Quantity: (#limit: <fmt:formatNumber type = "number" 
-         						maxFractionDigits="0" value = "${property.numStocks}" />)</font> <form:input size="8" maxlength="4"
-         							path="numToBuyOrSell" />
+							<!-- display the balance text use request.getParameter("BuyQuantity")-->	
+							<font face="verdana" size="4"> Buy Quantity(#limit: <fmt:formatNumber type = "number" 
+         						maxFractionDigits="0" value = "${balance/price - 1}" />):  <form:input size="8" maxlength="4" 
+         							path="numToBuyOrSell" /> </font>
 							<!-- display the update link -->
-							<input type="submit" value="Order" class="btn btn-dark" style="margin-left:30px;" />
+							<input type="submit" value="Order" class="btn-outline-dark btn-lg" style="margin-left:30px;" />
 				</form:form>			
 			</div>
 		</div>

@@ -2,6 +2,7 @@ package com.virtualStockPlatform.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.virtualStockPlatform.api.Api;
+import com.virtualStockPlatform.entity.Pair;
 import com.virtualStockPlatform.entity.Price;
 import com.virtualStockPlatform.entity.Property;
 import com.virtualStockPlatform.entity.Stock;
@@ -111,6 +113,7 @@ public class UserController {
 		Map<String, String> stocks = new HashMap<>();
         stocks.put("AMZN", "AMZN");
         stocks.put("GOOG", "GOOG");
+        stocks.put("NVDA", "NVDA");
 		// set user as a model attribute to pre-populate the form
 		theModel.addAttribute("user", theUser);
 		theModel.addAttribute("stocks", stocks);
@@ -118,30 +121,54 @@ public class UserController {
 		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
 		return "symbol-check";
 	}
-	
-//	@GetMapping("/sell")
-//	public String sellStock(@RequestParam("userId") int theId, 
-//			@RequestParam("stockName") String stockName, Model theModel) {
-//		// get the user from the db
-//		User theUser = userService.getUser(theId);
-//		// set user as a model attribute to pre-populate the form
-//		System.out.println(theId);
-//		System.out.println(stockName);
-//		theModel.addAttribute("user", theUser);
-//		return "sell-stock";
-//	}
-	
-	@PostMapping("/sellStock")
-	public String sellStock(Model theModel, @ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
-		System.out.println("TEST TEST ID: " + userSymbolCheck.getUserId());
-		System.out.println("TEST TEST stockName: " + userSymbolCheck.getStockName());
-		
-		// get the user from the database
-		User theUser = userService.getUser(userSymbolCheck.getUserId());
+
+	@PostMapping("/stockView")
+	public String stockView(Model theModel, 
+			@ModelAttribute("userSymbolCheck")UserSymbolCheck userSymbolCheck) {
+		String stockName = userSymbolCheck.getStockName();
+		int theId = userSymbolCheck.getUserId();
+		Stock stock = getStockByName(stockName);
+		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
 		// Get the property based on the id and stock name.
-		Property property = userService.getProperty(userSymbolCheck.getUserId(), userSymbolCheck.getStockName());
+		Property property = userService.getProperty(theId, stockName);
+		
+		// In Case the property is null which means the user doesn't have this stock
+		if (property == null) {
+			property = new Property();
+			property.setUserId(theId);
+			property.setNumStocks(0);
+			property.setStockName(stockName);
+			userService.saveProperty(property);
+		}
+		theModel.addAttribute("price", price);
+		theModel.addAttribute("userSymbolCheck", userSymbolCheck);
+		theModel.addAttribute("property", property);
+		return "stock-view";
+	}
+	
+	
+	
+	
+	// get from sell-stock
+	@GetMapping("/sellStock")
+	public String sellStock(Model theModel, @RequestParam("userId") int theId,
+			@RequestParam("stockName") String stockName) {
+		// get the user from the database
+		User theUser = userService.getUser(theId);
+		// Get the property based on the id and stock name.
+		Property property = userService.getProperty(theId, stockName);
+		
+		// In Case the property is null which means the user doesn't have this stock
+		if (property == null) {
+			property = new Property();
+			property.setUserId(theId);
+			property.setNumStocks(0);
+			property.setStockName(stockName);
+			userService.saveProperty(property);
+		}
+		
 		// Get the Stock information and price
-		Stock stock = getStockByName(userSymbolCheck.getStockName());
+		Stock stock = getStockByName(stockName);
 		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
 		// Add transaction
 		Transaction transaction = new Transaction(theUser.getId(), property.getStockName(), price.getClose());
@@ -154,6 +181,37 @@ public class UserController {
 		return "sell-stock";
 	}
 	
+	@GetMapping("/buyStock")
+	public String buyStock(Model theModel, @RequestParam("userId") int theId,
+			@RequestParam("stockName") String stockName) {
+		// get the user from the database
+		User theUser = userService.getUser(theId);
+		// Get the property based on the id and stock name.
+		Property property = userService.getProperty(theId, stockName);
+		
+		// In Case the property is null which means the user doesn't have this stock
+		if (property == null) {
+			property = new Property();
+			property.setUserId(theId);
+			property.setNumStocks(0);
+			property.setStockName(stockName);
+			userService.saveProperty(property);
+		}
+		
+		// Get the Stock information and price
+		Stock stock = getStockByName(stockName);
+		Price price = stock.getTimeSeries().entrySet().iterator().next().getValue();
+		// Add transaction
+		Transaction transaction = new Transaction(theUser.getId(), property.getStockName(), price.getClose());
+		// set user as a model attribute to pre-populate the form
+		theModel.addAttribute("user", theUser);
+		theModel.addAttribute("property", property);
+		theModel.addAttribute("stock", stock);
+		theModel.addAttribute("price", price);
+		theModel.addAttribute("transaction", transaction);
+		return "buy-stock";
+	}
+	
 	@PostMapping("/sell")
 	public String sellStockView(Model theModel, @ModelAttribute("transaction") Transaction transaction) {
 		System.out.println(transaction);
@@ -163,17 +221,110 @@ public class UserController {
 		double moneyGet = price * numberToSell;
 		String stockName = transaction.getStockName();
 		User theUser = userService.getUser(userId);
-		theUser.setBalance(theUser.getBalance() + moneyGet);
-		userService.saveUser(theUser);
+
 		Property property = userService.getProperty(userId, stockName);
 		int numberOwned = property.getNumStocks();
+		
+		// invalid input
+		if (numberOwned < numberToSell) {
+			theModel.addAttribute("user", theUser);
+			return "Warning";
+		}
+		
+		// save the sell
+		theUser.setBalance(theUser.getBalance() + moneyGet);
+		userService.saveUser(theUser);
+		
 		if (numberOwned == numberToSell) {
 			userService.deleteProperty(property.getId());
 		} else {
 			property.setNumStocks(property.getNumStocks() - numberToSell);
 			userService.saveProperty(property);
 		}
-		return "sell-stock";
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+		// TODO temporally use the user of index 0
+		// Please change it to the current user.
+		User tmpUser = theUsers.get(0);
+
+		// add the user to the model
+		theModel.addAttribute("user", tmpUser);
+		return "user-profile";
+	}
+	
+	@PostMapping("/buy")
+	public String buyStockView(Model theModel, @ModelAttribute("transaction") Transaction transaction) {
+		System.out.println(transaction);
+		double price = transaction.getPrice();
+		int numberToBuy = transaction.getNumToBuyOrSell();
+		int userId = transaction.getUserId();
+		double moneySpent = price * numberToBuy;
+		String stockName = transaction.getStockName();
+		User theUser = userService.getUser(userId);
+		double balance = theUser.getBalance();
+		
+		// invalid input
+		if (balance < moneySpent) {
+			theModel.addAttribute("user", theUser);
+			return "Warning";
+		}
+		
+		// save change
+		theUser.setBalance(balance - moneySpent);
+		userService.saveUser(theUser);
+		Property property = userService.getProperty(userId, stockName);
+
+		int numberOwned = property.getNumStocks();
+		property.setNumStocks(property.getNumStocks() + numberToBuy);
+		userService.saveProperty(property);
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+		
+		// Please change it to the current user.
+		User tmpUser = theUsers.get(0);
+
+		// add the user to the model
+		theModel.addAttribute("user", tmpUser);
+		return "user-profile";
+	}
+	
+	@GetMapping("/rank")
+	public String userRanks(Model theModel) {
+		// get users from the service
+		List<User> theUsers = userService.getUsers();
+
+		// Get all comapany's stock prices
+		Api api = new Api();
+		HashMap<String, Double> priceMap = api.getAllPrices();
+
+		// store users' sum of stocks
+		List<Double> theSum = new ArrayList<Double>();
+		
+		if (!api.isError(priceMap)) {
+			for (int i = 0; i < theUsers.size(); i++) {
+				double price = 0;
+				List<Property> prop = userService.getProperties(theUsers.get(i).getId());
+				for (int j = 0; j < prop.size(); j++) {
+					if (priceMap.containsKey(prop.get(j).getStockName())) {
+						price += priceMap.get(prop.get(j).getStockName()) * prop.get(j).getNumStocks();
+					}
+				}
+				price += theUsers.get(i).getBalance();
+				theSum.add(price);
+			}
+		}else {
+			System.out.println("Error happens");
+		}
+		
+		List<Pair> orderedUsers = new ArrayList<>();
+		for (int i = 0; i < theUsers.size(); i++) {
+			orderedUsers.add(new Pair(theUsers.get(i), theSum.get(i)));
+		}
+		Collections.sort(orderedUsers, (P1, P2) -> P2.getProperties() - P1.getProperties() > 0 ? 1 : -1);
+
+		// add the users to the model
+		theModel.addAttribute("allProperties", orderedUsers);
+		return "users-rank";
 	}
 	
 	
@@ -194,7 +345,7 @@ public class UserController {
 		// TODO temporally use the user of index 0
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
-
+		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
 		return "user-profile";

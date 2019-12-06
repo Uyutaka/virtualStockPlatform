@@ -2,6 +2,10 @@ body{
 	background-color: #868e96;
 }
 
+.sub-header{
+	color: white;
+}
+
 select {
    border: 0;
    color: #EEE;
@@ -13,6 +17,12 @@ select {
    *width: 350px;
    *background: #58B14C;
    -webkit-appearance: none;
+}
+
+.container {
+	justify-content: center;
+	display: flex;
+	align-items: center;
 }
 
 #leftPart {
@@ -40,10 +50,10 @@ select {
 	height: 410;
 	margin-top: auto;
 	margin-bottom: auto;
-	margin-left: auto;
+	margin-left: 200px;
     margin-right: auto;
 	width: 400px;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.3);
 	-webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 2s; /* Firefox < 16 */
         -ms-animation: fadein 2s; /* Internet Explorer */

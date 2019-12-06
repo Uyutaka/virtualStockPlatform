@@ -8,7 +8,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link type="text/css" type="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/user-profile.css"/>
+	href="${pageContext.request.contextPath}/resources/css/login.css"/>
 	<TITLE>Login</TITLE>
 </head>
 
@@ -24,17 +24,19 @@
 		<div id="header">
 			<div align="center" id="container">
 				<div id="content">
-					<div class="card text-white bg-secondary mb-3" style="max-width: 30rem;">
+					<div class="card text-white mb-3" style="max-width: 30rem;">
 					      <div class="card-body justify-content-center">
 					        <form class="form-login text-center">
 					
 					          <h3 class="sub-header">Please Login</h3>
 					        </br>
 					          <div class="form-group">
-					            <input class="input-box" id="UsernameInput" type="email" name="email" placeholder="Enter your email">
+					            <input class="input-box" id="UsernameInput" type="email" style="border-radius: 8px;"
+					            	name="email" placeholder="Enter your email">
 					          </div>
 					          <div class="form-group">
-					            <input type="password" id="PasswordInput" name="password" placeholder="Enter your password">
+					            <input type="password" id="PasswordInput" name="password" style="border-radius: 8px;"
+					            	placeholder="Enter your password">
 					          </div>
 					          <br>
 					          <button class="btn btn-success" id="LoginButton">Login</button>
