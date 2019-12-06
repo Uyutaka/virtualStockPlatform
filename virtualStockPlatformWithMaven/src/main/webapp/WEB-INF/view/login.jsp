@@ -1,5 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
@@ -16,16 +15,23 @@
 <link type="text/css" type="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/user-profile.css" />
 <TITLE>Login</TITLE>
+<style>
+.failed {
+	color: red;
+}
+</style>
 </head>
 
-<body
-	background="${pageContext.request.contextPath}/resources/Login-Wallpaper.jpg">
+<body>
+	<!--  background="${pageContext.request.contextPath}/resources/Login-Wallpaper.jpg">-->
+
+
+
 	<nav class="navigation-header"></nav>
 	<nav class="navbar navbar-light bg-dark">
 		<h2>
 			<font color="white">User Login platform</font>
 		</h2>
-		</a>
 	</nav>
 
 	<br>
@@ -41,14 +47,36 @@
 
 							<form:form
 								action="${pageContext.request.contextPath}/authenticateTheUser"
-								method="POST">
-								<p>
-									User name: <input type="text" name="username" />
-								</p>
-								<p>
-									Password: <input type="password" name="password" />
-								</p>
-								<input type="submit" value="Login" />
+								method="POST" class="form-login text-center">
+
+								<!-- Check for login error -->
+								<c:if test="${param.error != null}">
+									<div class="alert alert-danger color-xc-o">invalid
+										username/password</div>
+								</c:if>
+
+								<!-- Check for logout -->
+								<c:if test="${param.logout != null}">
+									<div class="alert alert-success color-xc-o">You have been
+										logged out.</div>
+								</c:if>
+
+								<h3 class="sub-header">Please Login</h3>
+
+								<div class="form-group">
+									<input class="input-box" id="UsernameInput" type="text"
+										name="username" placeholder="Enter your username">
+								</div>
+								<div class="form-group">
+									<input type="password" id="PasswordInput" name="password"
+										placeholder="Enter your password">
+								</div>
+								<br>
+
+
+
+
+								<button class="btn btn-success" id="LoginButton" type="submit">Login</button>
 
 							</form:form>
 							<form class="form-login text-center">
