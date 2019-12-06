@@ -14,10 +14,12 @@
 </head>
 
 <body>
-		<div id="header">
-			<h2>Stock Detail platform</h2>
-		</div>
-
+	<nav class="navigation-header"></nav>
+	      <nav class="navbar navbar-light bg-dark">
+	      <h2><font color="white">User Login platform</font></h2>
+	    </a>
+	    </nav>
+		<br><br><br>
 		<div id="container">
 			<div id="content">
 				<div class="card">
@@ -75,7 +77,7 @@
   new TradingView.widget(
   {
   "width": 850,
-  "height": 579,
+  "height": 616,
   "symbol": "NASDAQ:${userSymbolCheck.stockName}",
   "interval": "D",
   "timezone": "Etc/UTC",

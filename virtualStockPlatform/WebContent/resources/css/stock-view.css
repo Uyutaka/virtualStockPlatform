@@ -2,6 +2,10 @@ body{
 	background-color: #868e96;
 }
 
+.sub-header{
+	color: white;
+}
+
 select {
    border: 0;
    color: #EEE;
