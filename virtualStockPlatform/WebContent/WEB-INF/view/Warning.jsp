@@ -11,29 +11,23 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/Warning.css"/>
 </head>
-<body >
+<body background="${pageContext.request.contextPath}/resources/Warning.jpg">
 
 	<div id="wrapper">
-		<div id="header">
-			<h2>Symbol Check</h2>
-		</div>
-
-		<div id="container">
-			<div id="content">
-				<div align="center" id="container">
+		<div id="container">>
+				<div align="center">
 					<div id="content">
-						<div class="card bg-secondary mb-3" style="max-width: 50rem;">
+						<br><br><br><br><br><br>
+						<div class="card mb-3" style="max-width: 50rem;">
 					      	<div class="card-body justify-content-center">
-					        <img src="${pageContext.request.contextPath}/resources/Warning.png" 
-					        		class="img-rounded" height="200" width="200">
-								<h1 class="display-4" color="red">Invalid Operation Warning</h1>
+								<h1 class="display-1">Error</h1>
+								<h1 class="display-4">Invalid Operation Warning</h1>
 								<p style="font-family:courier;"><u>Your operation is invalid due 
 									to your operation already exceed the balance/number of stocks you have! </u></p>
-					        	<button type="button" class="btn btn-danger" onclick="window.location.href='profile'">Back to profile</button>
+					        	<button type="button" class="btn-outline-danger btn-sm" onclick="window.location.href='profile'">Back to profile</button>
 					      </div>
 					 </div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 <body>
 	<nav class="navigation-header"></nav>
 	      <nav class="navbar navbar-light bg-dark">
-	      <h2><font color="white">User Login platform</font></h2>
+	      <h2><font color="white">Stock view platform</font></h2>
 	    </a>
 	    </nav>
 		<br><br><br>
@@ -77,7 +77,7 @@
   new TradingView.widget(
   {
   "width": 850,
-  "height": 616,
+  "height": 617,
   "symbol": "NASDAQ:${userSymbolCheck.stockName}",
   "interval": "D",
   "timezone": "Etc/UTC",

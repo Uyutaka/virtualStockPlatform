@@ -24,7 +24,7 @@
 		<div id="header">
 			<div align="center" id="container">
 				<div id="content">
-					<div class="card text-white bg-secondary mb-3" style="max-width: 30rem;">
+					<div class="card text-white mb-3" style="max-width: 30rem;">
 					      <div class="card-body justify-content-center">
 					        <form class="form-login text-center">
 					

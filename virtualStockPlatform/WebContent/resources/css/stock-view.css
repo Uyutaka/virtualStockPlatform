@@ -50,7 +50,7 @@ select {
 	height: 410;
 	margin-top: auto;
 	margin-bottom: auto;
-	margin-left: auto;
+	margin-left: 200px;
     margin-right: auto;
 	width: 400px;
 	background-color: rgba(0,0,0,0.3);
