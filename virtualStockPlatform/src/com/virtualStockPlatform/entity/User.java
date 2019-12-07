@@ -27,6 +27,9 @@ public class User {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@Column(name="password")
+	private String password;
+	
 	@Column(name="email")
 	private String email;
 	
@@ -77,17 +80,19 @@ public class User {
 		this.email = email;
 	}
 
-//	public List<Property> getProperties() {
-//		return properties;
-//	}
-//
-//	public void setProperties(List<Property> properties) {
-//		this.properties = properties;
-//	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", balance=" + balance + "]";
-	}	
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", email=" + email + ", balance=" + balance + "]";
+	}
 }
