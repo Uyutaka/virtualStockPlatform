@@ -87,10 +87,8 @@ public class UserDAOImpl implements UserDAO{
 		theQuery.setParameter("Id", theId);
 		// execute query and get result list
 		List<Property> properties = theQuery.getResultList();
-		System.out.println(properties);
 		
 		// return the results
-		
 		return properties;
 	}
 
@@ -100,13 +98,9 @@ public class UserDAOImpl implements UserDAO{
 		double res = 0.0;
 		for (Property property : properties) {
 			String stockName = property.getStockName();
-			System.out.println("Stock Name is: " + stockName);
 			Stock stock = getStockByName(stockName);
-			System.out.println("Stock price is: " + stock.getTimeSeries().entrySet().iterator().next().getValue().getClose());
-			System.out.println("Stock number is: " + property.getNumStocks());
 			res += stock.getTimeSeries().entrySet().iterator().next().getValue().getClose() * property.getNumStocks();
 		}
-		System.out.print("Sum of Stocks: " + res);
 		return res;
 	}
 	
@@ -139,12 +133,8 @@ public class UserDAOImpl implements UserDAO{
 	public double getSumOfStock(Property property) {
 		double res = 0.0;
 		String stockName = property.getStockName();
-		System.out.println("Stock Name is: " + stockName);
 		Stock stock = getStockByName(stockName);
-		System.out.println("Stock price is: " + stock.getTimeSeries().entrySet().iterator().next().getValue().getClose());
-		System.out.println("Stock number is: " + property.getNumStocks());
 		res += stock.getTimeSeries().entrySet().iterator().next().getValue().getClose() * property.getNumStocks();
-		System.out.print("Sum of Stocks: " + res);
 		return res;
 	}
 
@@ -180,10 +170,8 @@ public class UserDAOImpl implements UserDAO{
 		theQuery.setParameter("Name", stockName);
 		// execute query and get result list
 		Property property = theQuery.uniqueResult();
-		System.out.println(property);
 		
 		// return the results
-		
 		return property;
 	}
 
