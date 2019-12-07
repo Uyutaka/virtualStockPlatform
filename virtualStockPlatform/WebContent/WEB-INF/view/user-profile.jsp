@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 <html>
@@ -32,12 +34,14 @@
 					<c:url var="updateLink" value="/user/showFormForUpdate">
 							<c:param name="userId" value="${user.id}" />
 						</c:url>
+						<c:set var = "balance" value="${user.balance}" />
 						<thead class="thead-light">
 						<tr>
 							<td>${user.firstName}</td>
 							<td>${user.lastName}</td>
 							<td>${user.email}</td>
-							<td>${user.balance}</td>
+							<td><fmt:formatNumber value = "${balance}" 
+         							type = "currency"/></p></td>
 						</tr>
 						</thead>
 				</table>	

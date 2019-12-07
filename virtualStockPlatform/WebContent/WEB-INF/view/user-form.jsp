@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>Add user</title>
+<title>Edit user</title>
 <!-- reference our style sheet -->
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -13,7 +13,7 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			<h2>URM - User Relationship Manager</h2>
+			<h2>Virtual Stock Transaction Platform</h2>
 		</div>
 	</div>
 
@@ -23,6 +23,7 @@
 		<form:form action="saveUser" modelAttribute="user" method="POST">
 			<!-- need to associate this data with user id -->
 			<form:hidden path="id" />
+			<form:hidden path="password" />
 
 			<table>
 				<tbody>
@@ -40,6 +41,7 @@
 						<td><label>Email:</label></td>
 						<td><form:input path="email" /></td>
 					</tr>
+					
 					<form:hidden path="balance" />
 
 
@@ -57,8 +59,11 @@
 
 		<div style=""></div>
 		<p>
-			<a href="${pageContext.request.contextPath}/user/list">Back to
-				List</a>
+			<c:url var="profile" value="/user/profile">
+				<c:param name="userId" value="${tempUser.id}" />
+			</c:url>
+			
+			<a href="${profile}">Back to profile</a>
 		</p>
 	</div>
 </body>

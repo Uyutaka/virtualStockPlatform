@@ -11,7 +11,7 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/symbol-check.css"/>
 </head>
-<body>
+<body >
 
 	<div id="wrapper">
 		<div id="header">
@@ -20,11 +20,15 @@
 
 		<div id="container">
 			<div id="content">
-				<form:form action="stockView" modelAttribute="userSymbolCheck" method="POST">
-					<form:hidden path="userId" />
-					<form:select path="stockName" items="${stocks}"/>
-					<input type="submit" value="Check" />
-				</form:form>
+				<div class="card text-white mb-3" style="max-width: 30rem;">
+				<div class="card-body justify-content-center">
+					<form:form action="stockView" modelAttribute="userSymbolCheck" method="POST">
+						<form:hidden path="userId" />
+						<form:select path="stockName" items="${stocks}"/>
+						<input type="submit" value="Check" />
+					</form:form>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>

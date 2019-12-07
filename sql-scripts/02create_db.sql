@@ -10,6 +10,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `balance` double DEFAULT NULL,
   
@@ -35,15 +36,15 @@ CREATE TABLE `property` (
 
 
 INSERT INTO `user` VALUES 
-  (1,'David','Adams','david@colorado.edu', 10000.00),
-  (2,'John','Doe','john@colorado.edu',10000.00),
-  (3,'Ajay','Rao','ajay@colorado.edu', 10000.00),
-  (4,'Mary','Public','mary@colorado.edu',10000.00),
-  (5,'Maxwell','Dixon','max@lcolorado.edu',10000.00);
+  (1,'David','Adams','123','david@colorado.edu', 10000.00),
+  (2,'John','Doe','123','john@colorado.edu',10000.00),
+  (3,'Ajay','Rao','123','ajay@colorado.edu', 10000.00),
+  (4,'Mary','Public','123','mary@colorado.edu',10000.00),
+  (5,'Maxwell','Dixon','123','max@lcolorado.edu',10000.00);
 
 INSERT INTO `property` VALUES 
   (1, 10, 'GOOG', 1),
-  (5, 30, 'AMZN', 1);
+  (2, 30, 'AMZN', 1);
 
 
 SET FOREIGN_KEY_CHECKS = 1;

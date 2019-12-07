@@ -3,6 +3,7 @@ package com.virtualStockPlatform.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,9 +247,11 @@ public class UserController {
 		// TODO temporally use the user of index 0
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
-
+		List<Property> properties = userService.getProperties(0);
+		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 	
@@ -282,9 +285,11 @@ public class UserController {
 		
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
-
+		List<Property> properties = userService.getProperties(0);
+		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 	
@@ -320,7 +325,12 @@ public class UserController {
 		for (int i = 0; i < theUsers.size(); i++) {
 			orderedUsers.add(new Pair(theUsers.get(i), theSum.get(i)));
 		}
-		Collections.sort(orderedUsers, (P1, P2) -> P2.getProperties() - P1.getProperties() > 0 ? 1 : -1);
+		Collections.sort(orderedUsers, new Comparator<Pair>() {
+			@Override
+			public int compare(Pair P1, Pair P2) {
+				return P2.getProperties() - P1.getProperties() > 0 ? 1 : -1;
+			}
+		});
 
 		// add the users to the model
 		theModel.addAttribute("allProperties", orderedUsers);
@@ -345,9 +355,11 @@ public class UserController {
 		// TODO temporally use the user of index 0
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
+		List<Property> properties = userService.getProperties(0);
 		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 
