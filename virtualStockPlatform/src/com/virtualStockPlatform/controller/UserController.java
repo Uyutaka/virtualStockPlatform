@@ -247,9 +247,11 @@ public class UserController {
 		// TODO temporally use the user of index 0
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
-
+		List<Property> properties = userService.getProperties(0);
+		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 	
@@ -283,9 +285,11 @@ public class UserController {
 		
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
-
+		List<Property> properties = userService.getProperties(0);
+		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 	
@@ -351,9 +355,11 @@ public class UserController {
 		// TODO temporally use the user of index 0
 		// Please change it to the current user.
 		User tmpUser = theUsers.get(0);
+		List<Property> properties = userService.getProperties(0);
 		
 		// add the user to the model
 		theModel.addAttribute("user", tmpUser);
+		theModel.addAttribute("properties", properties);
 		return "user-profile";
 	}
 
